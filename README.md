@@ -1,17 +1,15 @@
-环境启动：
-1、分别在./和./nodejs下载开发依赖包 命令 npm install / cnpm install(推荐使用淘宝镜像)
-2、到./nodejs目录下，启动node服务器，命令 node app.js
-3、在主目录下运行webpack自动打包环境，命令 webapck -wp
-4、浏览器输入 localhost:3000 即可
+# 环境启动
+ - 本项目采用vue、nodejs作为主要技术栈，路由使用vue-router、状态和数据管理使用vuex、交互运用axios。后台主要使用express框架，mysql为数据库进行接口开发。
+### 前端
+ 1. 根目录 
+ 2. npm install
+ 3. npm run dev
+
+### 后台
+ 1. 目录 ./nodejs
+ 2. npm install
+ 3. 端口3000
 
 
-已经搭好    express的一些测试api
-			vue-router vuex axios
-
-
-
-其实是为了解决跨域问题，才把webpack生成的build.js放到nodejs的静态文件中。
-有更好的开发方法的。
-
-
-研究下用git和github管理代码。 这我就不搭了。
+### 解决跨域调试问题
+ - 谷歌浏览器降低安全性 [教程](http://blog.csdn.net/dearwind153/article/details/52235749)
