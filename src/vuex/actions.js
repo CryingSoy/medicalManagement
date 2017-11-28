@@ -1,5 +1,5 @@
 export default {
-    jiayi({ commit }) {
-        commit('jiayi');
-    }
+  jiayi ({ commit }) {
+    commit('jiayi')
+  }
 }

@@ -8,13 +8,11 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-    data() {
-        return {
-            
-        }
-    },
-    computed: mapGetters([
-        'datas'
-    ])
+  data () {
+    return {}
+  },
+  computed: mapGetters([
+    'datas'
+  ])
 }
 </script>

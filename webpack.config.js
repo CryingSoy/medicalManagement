@@ -18,10 +18,13 @@ module.exports = {
                 }
             },
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            },
+                test: /\.(js|vue)$/,//
+                loader: 'eslint-loader',
+                enforce: 'pre',
+                options: {
+                  formatter: require('eslint-friendly-formatter')
+                }
+              },
             {
                 test: /\.(png|jpg|gif|svg)$/,
                 loader: 'file-loader',
@@ -37,12 +40,12 @@ module.exports = {
                 test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
                 loader: 'file-loader'
             },
-            
+
             {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader'
             },
-            
+
         ]
     },
     resolve: {
@@ -53,7 +56,7 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
         noInfo: true,
-        overlay: true
+        overlay: true,
     },
     performance: {
         hints: false

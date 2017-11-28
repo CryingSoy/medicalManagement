@@ -3,26 +3,28 @@ import App from './App.vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueRouter from 'vue-router'
+import axios from 'axios'
+import routes from './router.config'
+import store from './vuex/'
 
 Vue.use(ElementUI)
 
-import axios from 'axios';
-Vue.prototype.$axios = axios;
+Vue.prototype.$axios = axios
 
-import routes from './router.config'
+Vue.use(VueRouter)
 
-Vue.use(VueRouter);
-import store from './vuex/'
+const router = new VueRouter({// mode: 'history', //切换路径模式，变成history模式
+  scrollBehavior: () => ({
+    y: 0
+  }), // 滚动条滚动的行为，不加这个默认就会记忆原来滚动条的位置
+  routes
+})
 
-const router = new VueRouter({
-    // mode: 'history', //切换路径模式，变成history模式
-    scrollBehavior: () => ({ y: 0 }), // 滚动条滚动的行为，不加这个默认就会记忆原来滚动条的位置
-    routes
-});
+/* eslint-disable no-new */
 
 new Vue({
-    el: '#app',
-    store,
-    router,
-    render: h => h(App)
+  el: '#app',
+  store,
+  router,
+  render: h => h(App)
 })

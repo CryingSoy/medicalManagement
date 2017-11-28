@@ -7,11 +7,11 @@
 </template>
 <script>
 export default {
-    methods:{
-        jiayi(){
-            this.$store.dispatch('jiayi');
-        }
+  methods: {
+    jiayi () {
+      this.$store.dispatch('jiayi')
     }
+  }
 }
 </script>
 

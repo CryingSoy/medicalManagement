@@ -1,5 +1,5 @@
 export default {
-    datas: (state) => {
-        return state.num;
-    }
+  datas: (state) => {
+    return state.num
+  }
 }
