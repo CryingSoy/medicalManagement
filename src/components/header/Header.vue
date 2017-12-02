@@ -5,11 +5,16 @@
       <li>登录</li>
       <li>注册</li>
     </ul>
+    <login></login>
   </header>
 </template>
 <script>
+import login from '../login/login'
 export default {
   name: 'header',
+  components: {
+    login
+  },
   methods: {
   }
 }

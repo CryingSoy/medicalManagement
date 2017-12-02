@@ -1,10 +1,13 @@
 import getters from './getters'
 const state = {
-  num: 100
+  isShowLoginWindow: false
 }
 const mutations = {
-  jiayi (state) {
-    state.num++
+  openLoginWindow (state) {
+    state.isShowLoginWindow = true
+  },
+  closeLoginWindow (state) {
+    state.isShowLoginWindow = false
   }
 }
 export default {
