@@ -1,5 +1,6 @@
 import getters from './getters'
 const state = {
+  // 是否打开登录窗口
   isShowLoginWindow: false
 }
 const mutations = {

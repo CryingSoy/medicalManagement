@@ -2,20 +2,23 @@
   <header>
     <h1>华软医疗管理系统</h1>
     <ul>
-      <li>登录</li>
+      <li @click="login">登录</li>
       <li>注册</li>
     </ul>
     <login></login>
   </header>
 </template>
 <script>
-import login from '../login/login'
+import login from '../login/login.vue'
 export default {
   name: 'header',
   components: {
     login
   },
   methods: {
+    login () {
+      this.$store.dispatch('openLoginWindow')
+    }
   }
 }
 </script>
