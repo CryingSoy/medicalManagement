@@ -1,7 +1,8 @@
 import getters from './getters'
 const state = {
   // 是否打开登录窗口
-  isShowLoginWindow: false
+  isShowLoginWindow: false,
+  isShowRegWindow: false
 }
 const mutations = {
   openLoginWindow (state) {
@@ -9,6 +10,12 @@ const mutations = {
   },
   closeLoginWindow (state) {
     state.isShowLoginWindow = false
+  },
+  openRegWindow (state) {
+    state.isShowRegWindow = true
+  },
+  closeRegWindow (state) {
+    state.isShowRegWindow = false
   }
 }
 export default {

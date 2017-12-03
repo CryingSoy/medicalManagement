@@ -3,21 +3,27 @@
     <h1>华软医疗管理系统</h1>
     <ul>
       <li @click="login">登录</li>
-      <li>注册</li>
+      <li @click="register">注册</li>
     </ul>
     <login></login>
+    <register></register>
   </header>
 </template>
 <script>
 import login from '../login/login.vue'
+import register from '../register/register.vue'
 export default {
   name: 'header',
   components: {
-    login
+    login,
+    register
   },
   methods: {
     login () {
       this.$store.dispatch('openLoginWindow')
+    },
+    register () {
+      this.$store.dispatch('openRegWindow')
     }
   }
 }
