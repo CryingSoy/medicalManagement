@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="登录窗口" :visible="isShowLoginWindow" :before-close="colseLogin" center width="500px">
-    <el-form label-position="left" label-width="80px" :rules="rules" ref="loginData" :model="loginData">
+    <el-form label-position="left" label-width="80px" :rules="rules" ref="form" :model="loginData">
       <el-form-item label="用户类型" prop="userType">
         <el-select placeholder="用户类型" v-model="loginData.userType">
           <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -65,6 +65,7 @@ export default {
   },
   methods: {
     colseLogin () {
+      this.$refs.form.resetFields()
       this.$store.dispatch('closeLoginWindow')
     }
   },
