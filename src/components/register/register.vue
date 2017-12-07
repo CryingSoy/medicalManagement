@@ -25,7 +25,7 @@
         <el-input placeholder="请输入学号" v-model="regData.studentCode"></el-input>
       </el-form-item>
     </el-form>
-    <el-alert :title="errorText" type="error" v-show="error"></el-alert>
+    <el-alert :title="errorText" type="error" v-show="error" @click="colseError"></el-alert>
     <div slot="footer" class="dialog-footer">
       <el-button class="default-btn" @click="colseReg">取 消</el-button>
       <el-button class="success-btn" type="primary" @click="submitReg">注 册</el-button>
@@ -143,6 +143,9 @@ export default {
           }
         }
       })
+    },
+    colseError () {
+      this.error = false
     }
   },
   computed: {

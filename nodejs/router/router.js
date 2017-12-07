@@ -51,6 +51,7 @@ router.post('/register', (req, res) => {
           json.msg = '用户名已被注册'
           res.json(json)
         } else {
+          data.password = md5(md5(data.password).substring(1))
           store.registerStore(data).then(() => {
             json.code = 1
             json.msg = '成功'
