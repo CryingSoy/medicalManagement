@@ -21,13 +21,13 @@
       <el-form-item label="校医凭证" prop="doctorCode" v-show="regData.userType ==='doctor'">
         <el-input placeholder="请输入校医凭证" v-model="regData.doctorCode"></el-input>
       </el-form-item>
-      <el-form-item label="学号" prop="studentCode" v-show="regData.userType ==='sutdent'">
+      <el-form-item label="学号" prop="studentCode" v-show="regData.userType ==='student'">
         <el-input placeholder="请输入学号" v-model="regData.studentCode"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button class="default-btn" @click="colseReg">取 消</el-button>
-      <el-button class="success-btn" type="primary" @click="submitReg">确 定</el-button>
+      <el-button class="success-btn" type="primary" @click="submitReg">注 册</el-button>
     </div>
   </el-dialog>
 </template>
@@ -115,7 +115,15 @@ export default {
       this.$store.dispatch('closeRegWindow')
     },
     submitReg () {
-      console.log(this.regData)
+      this.$axios.post('http://localhost:3000/register', {
+        userType: this.regData.userType,
+        username: this.regData.username,
+        password: this.regData.password,
+        birth: this.regData.birth.getFullYear() + '-' + ((this.regData.birth.getMonth() + 1) < 10 ? '0' + (this.regData.birth.getMonth() + 1) : (this.regData.birth.getMonth() + 1)),
+        code: this.regData[this.regData.userType + 'Code']
+      }).then(res => {
+        console.log(res)
+      })
     }
   },
   computed: {
