@@ -25,6 +25,7 @@
         <el-input placeholder="请输入学号" v-model="regData.studentCode"></el-input>
       </el-form-item>
     </el-form>
+    <el-alert :title="errorText" type="error" v-show="error"></el-alert>
     <div slot="footer" class="dialog-footer">
       <el-button class="default-btn" @click="colseReg">取 消</el-button>
       <el-button class="success-btn" type="primary" @click="submitReg">注 册</el-button>
@@ -106,7 +107,9 @@ export default {
           message: '请输入学号',
           trigger: 'blur'
         }]
-      }
+      },
+      errorText: '',
+      error: false
     }
   },
   methods: {
@@ -122,7 +125,23 @@ export default {
         birth: this.regData.birth.getFullYear() + '-' + ((this.regData.birth.getMonth() + 1) < 10 ? '0' + (this.regData.birth.getMonth() + 1) : (this.regData.birth.getMonth() + 1)),
         code: this.regData[this.regData.userType + 'Code']
       }).then(res => {
-        console.log(res)
+        if (res.status === 200 && res.statusText === 'OK') {
+          const { data } = res
+          console.log(data)
+          if (data.code === -1) {
+            this.errorText = data.msg
+            this.error = true
+          } else if (data.code === 1) {
+            this.$message({
+              message: '注册成功',
+              type: 'success'
+            })
+            setTimeout(() => {
+              this.$store.dispatch('closeRegWindow')
+              this.$store.dispatch('openLoginWindow')
+            }, 1000)
+          }
+        }
       })
     }
   },

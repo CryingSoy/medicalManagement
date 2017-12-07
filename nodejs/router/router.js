@@ -36,7 +36,7 @@ router.post('/register', (req, res) => {
       json.code = -1
       json.msg = '生日格式错误'
       res.json(json)
-    } else if (!data.userType === 'doctor' || data.userType === 'student' || data.userType === 'teacher') {
+    } else if (!(data.userType === 'doctor' || data.userType === 'student' || data.userType === 'teacher')) {
       json.code = -1
       json.msg = '用户类型格式错误'
       res.json(json)
