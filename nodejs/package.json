@@ -10,8 +10,5 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2"
-  },
-  "devDependencies": {
-    "element-ui": "^2.0.5"
   }
 }
