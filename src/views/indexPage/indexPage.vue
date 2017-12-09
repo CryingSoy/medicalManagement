@@ -2,9 +2,9 @@
     <div id="index">
         <my-header></my-header>
         <section>
-          <div>校医点这</div>
-          <div>学生点这</div>
-          <div>教师点这</div>
+          <div @click="goDoctor">校医点这</div>
+          <div @click="goStudent">学生点这</div>
+          <div @click="goTeacher">教师点这</div>
         </section>
         <my-footer></my-footer>
     </div>
@@ -22,6 +22,23 @@ export default {
   components: {
     myHeader,
     myFooter
+  },
+  methods: {
+    goDoctor () {
+      this.$router.push({
+        path: '/doctorPage'
+      })
+    },
+    goStudent () {
+      this.$router.push({
+        path: '/studentPage'
+      })
+    },
+    goTeacher () {
+      this.$router.push({
+        path: '/teacherPage'
+      })
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>华软医疗管理系统</h1>
+    <h1 @click="goIndex">华软医疗管理系统</h1>
     <ul>
       <li @click="login">登录</li>
       <li @click="register">注册</li>
@@ -19,6 +19,11 @@ export default {
     register
   },
   methods: {
+    goIndex () {
+      this.$router.push({
+        path: '/'
+      })
+    },
     login () {
       this.$store.dispatch('openLoginWindow')
     },
@@ -42,6 +47,7 @@ header {
   h1 {
     font-size: 20px;
     color: #fff;
+    cursor: pointer;
   }
   li {
     color: #fff;
