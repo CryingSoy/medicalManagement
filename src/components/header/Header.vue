@@ -31,6 +31,9 @@ export default {
 
 <style lang="less" scoped>
 header {
+  width: 100%;
+  position: fixed;
+  top: 0;
   height: 50px;
   background: url('./header.png');
   display: flex;
