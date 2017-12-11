@@ -6,6 +6,13 @@
           <div @click="goStudent">学生点这</div>
           <div @click="goTeacher">教师点这</div>
         </section>
+        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+          <span>{{ dialogInfo }}</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          </span>
+        </el-dialog>
         <my-footer></my-footer>
     </div>
 </template>
@@ -17,7 +24,10 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'index',
   data () {
-    return {}
+    return {
+      dialogVisible: false,
+      dialogInfo: ''
+    }
   },
   components: {
     myHeader,
@@ -25,25 +35,52 @@ export default {
   },
   methods: {
     goDoctor () {
-      console.log(this.userInfo.typ)
-      this.$router.push({
-        path: '/doctorPage'
-      })
+      if (this.userInfo.typ !== '校医') {
+        this.dialogVisible = true
+        if (this.isShowUserInfo === true) {
+          this.dialogInfo = '用户类型错误'
+        } else {
+          this.dialogInfo = '请登录'
+        }
+      } else {
+        this.$router.push({
+          path: '/doctorPage'
+        })
+      }
     },
     goStudent () {
-      this.$router.push({
-        path: '/studentPage'
-      })
+      if (this.userInfo.typ !== '学生') {
+        this.dialogVisible = true
+        if (this.isShowUserInfo === true) {
+          this.dialogInfo = '用户类型错误'
+        } else {
+          this.dialogInfo = '请登录'
+        }
+      } else {
+        this.$router.push({
+          path: '/studentPage'
+        })
+      }
     },
     goTeacher () {
-      this.$router.push({
-        path: '/teacherPage'
-      })
+      if (this.userInfo.typ !== '教师') {
+        this.dialogVisible = true
+        if (this.isShowUserInfo === true) {
+          this.dialogInfo = '用户类型错误'
+        } else {
+          this.dialogInfo = '请登录'
+        }
+      } else {
+        this.$router.push({
+          path: '/teacherPage'
+        })
+      }
     }
   },
   computed: {
     ...mapGetters([
-      'userInfo'
+      'userInfo',
+      'isShowUserInfo'
     ])
   }
 }

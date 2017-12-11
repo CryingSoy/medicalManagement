@@ -32,6 +32,8 @@ const mutations = {
   closeUserInfo (state) {
     state.isShowUserInfo = false
     localStorage.siseToken = ''
+    state.userInfo.name = ''
+    state.userInfo.typ = ''
   },
   setUserInfo (state, userInfo) {
     state.userInfo = userInfo
