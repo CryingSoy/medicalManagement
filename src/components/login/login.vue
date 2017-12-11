@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="登录窗口" :visible="isShowLoginWindow" :before-close="closeLogin" center width="500px">
+  <el-dialog title="登录窗口" :modal-append-to-body="false" :visible="isShowLoginWindow" :before-close="closeLogin" center width="500px">
     <el-form label-position="left" label-width="80px" :rules="rules" ref="form" :model="loginData">
       <el-form-item label="用户类型" prop="userType">
         <el-select placeholder="用户类型" v-model="loginData.userType">
@@ -15,7 +15,7 @@
     </el-form>
     <el-alert :title="errorText" type="error" v-show="error" @close="closeError"></el-alert>
     <div slot="footer" class="dialog-footer">
-      <el-button class="default-btn" @click="closeLogin">取 消</el-button>
+      <el-button class="default-btn"  @click="closeLogin">取 消</el-button>
       <el-button class="success-btn" type="primary" @click="submitReg">确 定</el-button>
     </div>
   </el-dialog>
@@ -104,8 +104,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isShowLoginWindow',
-      'token'
+      'isShowLoginWindow'
     ])
   }
 }

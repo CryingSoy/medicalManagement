@@ -43,7 +43,7 @@ exports.queryLogin = data => {
       if (error) {
         throw Error
       }
-      if (rows[0].password === data.password && rows[0].type === data.userType) {
+      if (rows.length === 1 && rows[0].password === data.password && rows[0].type === data.userType) {
         if (!data.hasOwnProperty('token') || '' === rows[0].serect) { //用户在新设备登陆或第一次登陆
           let token = updateToken(data)
           resolve({

@@ -13,7 +13,7 @@
 <script>
 import myHeader from '../../components/header/header.vue'
 import myFooter from '../../components/footer/footer.vue'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'index',
   data () {
@@ -25,6 +25,7 @@ export default {
   },
   methods: {
     goDoctor () {
+      console.log(this.userInfo.typ)
       this.$router.push({
         path: '/doctorPage'
       })
@@ -39,6 +40,11 @@ export default {
         path: '/teacherPage'
       })
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   }
 }
 </script>

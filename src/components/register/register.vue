@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="注册窗口" :visible="isShowRegWindow" :before-close="closeReg" center width="500px">
+  <el-dialog title="注册窗口" :visible="isShowRegWindow" :modal-append-to-body="false" :before-close="closeReg" center width="500px">
     <el-form label-position="left" label-width="80px" :rules="rules" :model="regData" ref="form">
       <el-form-item label="用户类型" prop="userType">
         <el-select placeholder="用户类型" v-model="regData.userType">
@@ -25,11 +25,7 @@
         <el-input placeholder="请输入学号" v-model="regData.studentCode"></el-input>
       </el-form-item>
     </el-form>
-<<<<<<< HEAD
     <el-alert :title="errorText" type="error" v-show="error" @close="closeError"></el-alert>
-=======
-    <el-alert :title="errorText" type="error" v-show="error" @click="colseError"></el-alert>
->>>>>>> 1adc2820ac0918e58e2155984ec0e70295f33e02
     <div slot="footer" class="dialog-footer">
       <el-button class="default-btn" @click="closeReg">取 消</el-button>
       <el-button class="success-btn" type="primary" @click="submitReg">注 册</el-button>
@@ -149,11 +145,7 @@ export default {
         }
       })
     },
-<<<<<<< HEAD
     closeError () {
-=======
-    colseError () {
->>>>>>> 1adc2820ac0918e58e2155984ec0e70295f33e02
       this.error = false
     }
   },

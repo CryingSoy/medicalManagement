@@ -26,11 +26,6 @@ export default {
     login,
     register
   },
-  data () {
-    return {
-      username: '1232'
-    }
-  },
   methods: {
     goIndex () {
       this.$router.push({
