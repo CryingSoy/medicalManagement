@@ -4,5 +4,14 @@ export default {
   },
   isShowRegWindow: (state) => {
     return state.isShowRegWindow
+  },
+  token: (state) => {
+    return state.token
+  },
+  isShowUserInfo: (state) => {
+    return state.isShowUserInfo
+  },
+  userInfo: (state) => {
+    return state.userInfo
   }
 }

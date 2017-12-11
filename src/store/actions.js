@@ -14,5 +14,21 @@ export default {
   // 关闭注册窗口
   closeRegWindow ({ commit }) {
     commit('closeRegWindow')
+  },
+  // 保存Token
+  setToken ({ commit }, token) {
+    commit('setToken', token)
+  },
+  // 显示登陆信息
+  openUserInfo ({ commit }) {
+    commit('openUserInfo')
+  },
+  // 关闭登陆信息
+  closeUserInfo ({ commit }) {
+    commit('closeUserInfo')
+  },
+  // 保存用户信息
+  setUserInfo ({ commit }, userInfo) {
+    commit('setUserInfo', userInfo)
   }
 }

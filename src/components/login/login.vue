@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="登录窗口" :visible="isShowLoginWindow" :before-close="colseLogin" center width="500px">
+  <el-dialog title="登录窗口" :visible="isShowLoginWindow" :before-close="closeLogin" center width="500px">
     <el-form label-position="left" label-width="80px" :rules="rules" ref="form" :model="loginData">
       <el-form-item label="用户类型" prop="userType">
         <el-select placeholder="用户类型" v-model="loginData.userType">
@@ -13,9 +13,10 @@
         <el-input placeholder="请输入密码" type="password" v-model="loginData.password"></el-input>
       </el-form-item>
     </el-form>
+    <el-alert :title="errorText" type="error" v-show="error" @close="closeError"></el-alert>
     <div slot="footer" class="dialog-footer">
-      <el-button class="default-btn" @click="colseLogin">取 消</el-button>
-      <el-button class="success-btn" type="primary">确 定</el-button>
+      <el-button class="default-btn" @click="closeLogin">取 消</el-button>
+      <el-button class="success-btn" type="primary" @click="submitReg">确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -28,15 +29,15 @@ export default {
     return {
       // 用户类型选项
       userOptions: [{
-        value: '选项1',
+        value: 'doctor',
         label: '我是校医'
       },
       {
-        value: '选项2',
+        value: 'student',
         label: '我是学生'
       },
       {
-        value: '选项3',
+        value: 'teacher',
         label: '我是教师'
       }],
       loginData: {
@@ -60,18 +61,51 @@ export default {
           message: '请输入密码',
           trigger: 'blur'
         }]
-      }
+      },
+      errorText: '',
+      error: false
     }
   },
   methods: {
-    colseLogin () {
+    closeLogin () {
       this.$refs.form.resetFields()
       this.$store.dispatch('closeLoginWindow')
+    },
+    submitReg () {
+      this.$axios.post('http://localhost:3000/login', {
+        userType: this.loginData.userType,
+        username: this.loginData.username,
+        password: this.loginData.password
+      }).then(res => {
+        if (res.status === 200 && res.statusText === 'OK') {
+          const { data } = res
+          let serverBackData = data
+          console.log(serverBackData)
+          if (serverBackData.code === -1) {
+            this.errorText = serverBackData.msg
+            this.error = true
+          } else if (!serverBackData.hasOwnProperty('data')) {
+            this.error = false
+            this.$store.dispatch('closeLoginWindow')
+          } else {
+            this.error = false
+            this.$store.dispatch('setToken', serverBackData.data.token)
+            this.$store.dispatch('closeLoginWindow')
+            this.$store.dispatch('setUserInfo', serverBackData.data)
+            this.$store.dispatch('openUserInfo')
+            localStorage.siseToken = serverBackData.data.token
+          }
+        }
+      })
+    },
+    closeError () {
+      this.error = false
     }
   },
   computed: {
     ...mapGetters([
-      'isShowLoginWindow'
+      'isShowLoginWindow',
+      'token'
     ])
   }
 }
