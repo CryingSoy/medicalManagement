@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>华软医疗管理系统</h1>
+    <h1 @click="goIndex">华软医疗管理系统</h1>
     <ul>
       <div v-if="!isShowUserInfo">
         <li class="click" @click="login">登录</li>
@@ -32,6 +32,11 @@ export default {
     }
   },
   methods: {
+    goIndex () {
+      this.$router.push({
+        path: '/'
+      })
+    },
     login () {
       this.$store.dispatch('openLoginWindow')
     },
@@ -72,6 +77,9 @@ export default {
 
 <style lang="less" scoped>
 header {
+  width: 100%;
+  position: fixed;
+  top: 0;
   height: 50px;
   background: url('./header.png');
   display: flex;
@@ -80,6 +88,7 @@ header {
   h1 {
     font-size: 20px;
     color: #fff;
+    cursor: pointer;
   }
   li {
     color: #fff;
