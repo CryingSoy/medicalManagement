@@ -38,11 +38,11 @@ const mutations = {
   setUserInfo (state, userInfo) {
     state.userInfo = userInfo
     if (state.userInfo.typ === 'doctor') {
-      state.userInfo.typ = '校医'
+      state.userInfo.typCN = '校医'
     } else if (state.userInfo.typ === 'student') {
-      state.userInfo.typ = '学生'
+      state.userInfo.typCN = '学生'
     } else if (state.userInfo.typ === 'teacher') {
-      state.userInfo.typ = '教师'
+      state.userInfo.typCN = '教师'
     }
   }
 }

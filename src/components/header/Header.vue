@@ -7,7 +7,7 @@
       <li class="click" @click="register">注册</li>
       </div>
       <div v-else>
-        <li>{{ userInfo.typ }}</li>
+        <li>{{ userInfo.typCN }}</li>
         <li>{{ userInfo.name }}</li>
         <li class="click" @click="logout">退出</li>
       </div>
@@ -40,6 +40,9 @@ export default {
     },
     logout () {
       this.$store.dispatch('closeUserInfo')
+      this.$router.push({
+        path: '/'
+      })
     }
   },
   beforeMount () {
@@ -80,6 +83,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  z-index: 999;
   h1 {
     font-size: 20px;
     color: #fff;

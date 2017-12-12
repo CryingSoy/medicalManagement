@@ -6,7 +6,7 @@
           <div @click="goStudent">学生点这</div>
           <div @click="goTeacher">教师点这</div>
         </section>
-        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+        <el-dialog title="提示" center :visible.sync="dialogVisible" width="500px">
           <span>{{ dialogInfo }}</span>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     goDoctor () {
-      if (this.userInfo.typ !== '校医') {
+      if (this.userInfo.typ !== 'doctor') {
         this.dialogVisible = true
         if (this.isShowUserInfo === true) {
           this.dialogInfo = '用户类型错误'
@@ -49,7 +49,7 @@ export default {
       }
     },
     goStudent () {
-      if (this.userInfo.typ !== '学生') {
+      if (this.userInfo.typ !== 'student') {
         this.dialogVisible = true
         if (this.isShowUserInfo === true) {
           this.dialogInfo = '用户类型错误'
@@ -63,7 +63,7 @@ export default {
       }
     },
     goTeacher () {
-      if (this.userInfo.typ !== '教师') {
+      if (this.userInfo.typ !== 'teacher') {
         this.dialogVisible = true
         if (this.isShowUserInfo === true) {
           this.dialogInfo = '用户类型错误'

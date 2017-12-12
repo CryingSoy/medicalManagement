@@ -94,6 +94,10 @@ export default {
             this.$store.dispatch('setUserInfo', serverBackData.data)
             this.$store.dispatch('openUserInfo')
             localStorage.siseToken = serverBackData.data.token
+            this.$message({
+              message: '登录成功',
+              type: 'success'
+            })
           }
         }
       })
