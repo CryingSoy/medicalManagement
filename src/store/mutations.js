@@ -5,7 +5,8 @@ const state = {
   isShowRegWindow: false,
   token: '',
   isShowUserInfo: false,
-  userInfo: {}
+  userInfo: {},
+  isTokenValidated: false
 }
 const mutations = {
   openLoginWindow (state) {
@@ -44,6 +45,9 @@ const mutations = {
     } else if (state.userInfo.typ === 'teacher') {
       state.userInfo.typ = '教师'
     }
+  },
+  validatedToken (state) {
+    state.isTokenValidated = true
   }
 }
 export default {

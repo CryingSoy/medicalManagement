@@ -30,5 +30,9 @@ export default {
   // 保存用户信息
   setUserInfo ({ commit }, userInfo) {
     commit('setUserInfo', userInfo)
+  },
+  // 验证token完成标志
+  validatedToken ({ commit }) {
+    commit('validatedToken')
   }
 }

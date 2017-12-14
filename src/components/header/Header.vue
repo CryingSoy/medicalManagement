@@ -40,14 +40,16 @@ export default {
     },
     logout () {
       this.$store.dispatch('closeUserInfo')
+      window.location.reload()
     }
   },
   beforeMount () {
-    if (localStorage.siseToken !== '') {
+    if (localStorage.siseToken && localStorage.siseToken !== '') {
       this.$axios.post('http://localhost:3000/login', {
         token: localStorage.siseToken
       }).then(res => {
         if (res.status === 200 && res.statusText === 'OK') {
+          this.$store.dispatch('validatedToken')
           const { data } = res
           let serverBackData = data
           console.log(serverBackData)

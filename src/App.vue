@@ -8,22 +8,9 @@
 export default {
   name: 'app',
   data () {
-    return {
-      msg: '111111111111'
-    }
+    return {}
   },
-  methods: {
-    test () {
-      this.$axios
-        .get('/test', {})
-        .then(response => {
-          console.log(response)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
-  }
+  methods: {}
 }
 </script>
 

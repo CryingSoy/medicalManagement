@@ -13,5 +13,8 @@ export default {
   },
   userInfo: (state) => {
     return state.userInfo
+  },
+  isTokenValidated: (state) => {
+    return state.isTokenValidated
   }
 }
