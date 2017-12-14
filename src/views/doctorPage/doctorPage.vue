@@ -1,16 +1,19 @@
 <template>
   <div id="doctor">
     <my-header></my-header>
+    <doctor-nav v-if="isLogin"></doctor-nav>
   </div>
 </template>
 
 <script>
 import myHeader from '../../components/header/Header.vue'
+import doctorNav from '../../components/doctor-nav/doctor-nav.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'doctorPage',
   components: {
-    myHeader
+    myHeader,
+    doctorNav
   },
   data () {
     return {
@@ -28,7 +31,7 @@ export default {
     if (!localStorage.siseToken) {
       this.$store.dispatch('openLoginWindow')
     } else {
-      if (this.userInfo.typ !== '校医') {
+      if (this.userInfo.typ !== '校医' && this.isTokenValidated) {
         this.$message.error({
           message: '用户类型错误，请登录正确的用户类型'
         })
@@ -65,3 +68,5 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped></style>

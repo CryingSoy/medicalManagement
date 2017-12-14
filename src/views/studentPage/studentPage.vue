@@ -28,7 +28,7 @@ export default {
     if (!localStorage.siseToken) {
       this.$store.dispatch('openLoginWindow')
     } else {
-      if (this.userInfo.typ !== '学生') {
+      if (this.userInfo.typ !== '学生' && this.isTokenValidated) {
         this.$message.error({
           message: '用户类型错误，请登录正确的用户类型'
         })
