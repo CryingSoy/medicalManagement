@@ -97,4 +97,85 @@ router.post('/login', (req, res) => {
   })
 })
 
+router.post('/drugSearch', (req, res) => {
+  const form = new formidable.IncomingForm()
+  let json = {}
+  form.parse(req, (err, data) => {
+    store.drugSearch(data.searchItem)
+    .then(searchResult => {
+      if (searchResult === false) {
+        json.code = -1
+        if (data.searchItem === undefined) {
+          json.msg = '未搜索到相关的结果'
+        } else {
+          json.msg = `未搜索到与"${data.searchItem}"相关的结果`
+        }
+        res.json(json)
+      } else {
+        json.code = 1
+        json.msg = `搜索到${searchResult.length}条结果`
+        json.data = searchResult
+        res.json(json)
+      }
+    })
+  })
+})
+
+router.post('/treatSave', (req, res) => {
+  const form = new formidable.IncomingForm()
+  let json = {}
+  form.parse(req, (err, data) => {
+    // console.log(data)
+    store.treatSave(data)
+    .then(isSaveSuccess => {
+      if (isSaveSuccess) {
+        json.code = 1
+        json.msg = '就诊信息存储成功'
+        res.json(json)
+      }
+    })
+  })
+})
+
+router.post('/studentSearch', (req, res) => {
+  const form = new formidable.IncomingForm()
+  let json = {}
+  form.parse(req, (err, data) => {
+    store.studentSearch(data.studentId)
+    .then(studentInfo => {
+      console.log(studentInfo)
+      if (studentInfo.length > 0) {
+        json.code = 1
+        json.msg = '学生信息查询成功'
+        json.data = studentInfo
+        res.json(json)
+      } else {
+        json.code = -1
+        json.msg = '未查询到信息'
+        res.json(json)
+      }
+    })
+  })
+})
+
+router.post('/searchStudentTreat', (req, res) => {
+  const form = new formidable.IncomingForm()
+  let json = {}
+  form.parse(req, (err, data) => {
+    store.searchStudentTreat(data.studentId)
+    .then(studentTreat => {
+      if (studentTreat.length > 0) {
+        json.code = 1
+        json.msg = '学生就诊信息查询成功'
+        json.data = studentTreat
+        res.json(json)
+      } else {
+        json.code = -1
+        json.msg = '未查询到就诊信息'
+        res.json(json)
+      }
+    })
+  })
+})
+
 module.exports = router

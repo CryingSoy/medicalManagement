@@ -36,11 +36,11 @@ export default {
   methods: {
     goDoctor () {
       if (this.userInfo.typ !== 'doctor') {
-        this.dialogVisible = true
         if (this.isShowUserInfo === true) {
+          this.dialogVisible = true
           this.dialogInfo = '用户类型错误'
         } else {
-          this.dialogInfo = '请登录'
+          this.$store.dispatch('openLoginWindow')
         }
       } else {
         this.$router.push({
@@ -50,11 +50,11 @@ export default {
     },
     goStudent () {
       if (this.userInfo.typ !== 'student') {
-        this.dialogVisible = true
         if (this.isShowUserInfo === true) {
+          this.dialogVisible = true
           this.dialogInfo = '用户类型错误'
         } else {
-          this.dialogInfo = '请登录'
+          this.$store.dispatch('openLoginWindow')
         }
       } else {
         this.$router.push({
@@ -64,11 +64,11 @@ export default {
     },
     goTeacher () {
       if (this.userInfo.typ !== 'teacher') {
-        this.dialogVisible = true
         if (this.isShowUserInfo === true) {
+          this.dialogVisible = true
           this.dialogInfo = '用户类型错误'
         } else {
-          this.dialogInfo = '请登录'
+          this.$store.dispatch('openLoginWindow')
         }
       } else {
         this.$router.push({

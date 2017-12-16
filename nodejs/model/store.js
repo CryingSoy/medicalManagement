@@ -41,6 +41,7 @@ exports.queryLogin = data => {
     let sqlcommand = `select * from userInfo where username = '${data.username}'`
     mysql.connection.query(sqlcommand, (error, rows, fields) => {
       if (error) {
+        console.log(error)
         throw Error
       }
       if (rows.length === 1 && rows[0].password === data.password && rows[0].type === data.userType) {
@@ -89,6 +90,78 @@ exports.queryLogin = data => {
       } else {
         resolve(false)
       }
+    })
+  })
+}
+
+exports.drugSearch = searchItem => {
+  return new Promise((resolve, reject) => {
+    if (searchItem === undefined) {
+      searchItem = ''
+    }
+    let sqlcommand = `select * from drugs where name like '%${searchItem}%' or barCode like '%${searchItem}%'`
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      if (rows.length === 0) {
+        resolve(false)
+      } else {
+        let array = rows.map(item => {
+          return {
+            barCode: item.barCode,
+            name: item.name,
+            money: item.money,
+            useDetail: item.useDetail,
+            factory: item.factory,
+            num: item.num
+          }
+        })
+        resolve(array)
+      }
+    })
+  })
+}
+
+exports.treatSave = treatData => {
+  return new Promise((resolve, reject) => {
+    let medicineDetail = treatData.medicineDetail.map(item => {
+      return JSON.stringify(item)
+    })
+    let medicineDetailString = medicineDetail.join('+')
+    if (treatData.leaveDay === '') {
+      treatData.leaveDay = 0
+    }
+    let sqlcommand = `insert into treat(studentId,time,total,disease,diseaseDetail,medicineDetail,doctorId,leaveDay) value('${treatData.studentId}','${treatData.time}','${treatData.total}','${treatData.disease}','${treatData.diseaseDetail}','${medicineDetailString}','${treatData.doctorId}','${treatData.leaveDay}')`
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve(true)
+    })
+  })
+}
+
+exports.studentSearch = studentId => {
+  return new Promise((resolve, reject) => {
+    let sqlcommand = `select * from studentInfo where studentId = '${studentId}'`
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve(rows)
+    })
+  })
+}
+
+exports.searchStudentTreat = studentId => {
+  return new Promise((resolve, reject) => {
+    let sqlcommand = `select * from treat where studentId = '${studentId}'`
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve(rows)
     })
   })
 }

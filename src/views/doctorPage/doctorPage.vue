@@ -7,7 +7,6 @@
       <div>药品信息管理</div>
       <div>就诊信息管理</div>
     </section>
-    <my-footer></my-footer> 
   </div>
 </template>
 

@@ -5,7 +5,11 @@ const state = {
   isShowRegWindow: false,
   token: '',
   isShowUserInfo: false,
-  userInfo: {}
+  userInfo: {
+    name: '',
+    typ: '',
+    typCN: ''
+  }
 }
 const mutations = {
   openLoginWindow (state) {
@@ -34,6 +38,7 @@ const mutations = {
     localStorage.siseToken = ''
     state.userInfo.name = ''
     state.userInfo.typ = ''
+    state.userInfo.typCN = ''
   },
   setUserInfo (state, userInfo) {
     state.userInfo = userInfo
