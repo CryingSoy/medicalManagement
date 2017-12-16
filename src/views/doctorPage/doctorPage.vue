@@ -2,6 +2,7 @@
   <div id="doctor">
     <my-header></my-header>
     <doctor-nav v-if="isLogin"></doctor-nav>
+    <router-view class="view" v-if="isLogin"></router-view>
   </div>
 </template>
 
@@ -59,4 +60,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.view {
+  padding: 50px 0 0 200px;
+}
+</style>

@@ -14,7 +14,7 @@
           <i class="el-icon-search"></i>
           <span slot="title">药物管理</span>
         </template>
-          <el-menu-item index="2-1">药品录入</el-menu-item>
+          <el-menu-item index="drug-entry">药品录入</el-menu-item>
           <el-menu-item index="2-2">药品查询</el-menu-item>
           <el-menu-item index="2-3">药品流向</el-menu-item>
       </el-submenu>
@@ -40,11 +40,11 @@ export default {
     },
     handleClose (key, keyPath) {},
     select (index) {
-      // if (index === 'treat') {
-      //   this.$router.push({
-      //     path: '/doctorPage/treat'
-      //   })
-      // }
+      if (index === 'drug-entry') {
+        this.$router.push({
+          path: '/doctorPage/drugEntry'
+        })
+      }
     }
   }
 }
@@ -64,7 +64,7 @@ export default {
     top: 190px;
   }
   .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 180px;
+    width: 200px;
     min-height: 400px;
   }
 }
