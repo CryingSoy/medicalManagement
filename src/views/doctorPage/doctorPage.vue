@@ -28,21 +28,11 @@ export default {
     ])
   },
   mounted () {
-    if (!localStorage.siseToken) {
-      this.$store.dispatch('openLoginWindow')
-    } else {
-      if (this.userInfo.typ !== '校医' && this.isTokenValidated) {
-        this.$message.error({
-          message: '用户类型错误，请登录正确的用户类型'
-        })
-      } else {
-        this.isLogin = true
-      }
-    }
+    if (!localStorage.siseToken) this.$store.dispatch('openLoginWindow')
   },
   watch: {
     isTokenValidated (value) {
-      if (value && this.isShowUserInfo) {
+      if (this.isShowUserInfo) {
         if (this.userInfo.typ !== '校医') {
           this.$message.error({
             message: '用户类型错误，请登录正确的用户类型'

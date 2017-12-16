@@ -34,5 +34,9 @@ export default {
   // 验证token完成标志
   validatedToken ({ commit }) {
     commit('validatedToken')
+  },
+  // 重置token完成标志
+  colseValidatedToken ({ commit }) {
+    commit('colseValidatedToken')
   }
 }

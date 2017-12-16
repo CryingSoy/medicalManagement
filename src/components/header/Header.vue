@@ -59,6 +59,9 @@ export default {
             this.$store.dispatch('openUserInfo')
             this.$store.dispatch('setUserInfo', serverBackData.data)
           }
+          setTimeout(() => {
+            this.$store.dispatch('colseValidatedToken')
+          }, 1)
         }
       })
     }

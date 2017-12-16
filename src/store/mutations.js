@@ -48,6 +48,9 @@ const mutations = {
   },
   validatedToken (state) {
     state.isTokenValidated = true
+  },
+  colseValidatedToken (state) {
+    state.isTokenValidated = false
   }
 }
 export default {
