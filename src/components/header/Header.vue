@@ -7,7 +7,7 @@
       <li class="click" @click="register">注册</li>
       </div>
       <div v-else>
-        <li>{{ userInfo.typ }}</li>
+        <li>{{ userInfo.typCN }}</li>
         <li>{{ userInfo.name }}</li>
         <li class="click" @click="logout">退出</li>
       </div>
@@ -40,7 +40,9 @@ export default {
     },
     logout () {
       this.$store.dispatch('closeUserInfo')
-      window.location.reload()
+      this.$router.push({
+        path: '/'
+      })
     }
   },
   beforeMount () {
@@ -55,6 +57,9 @@ export default {
           console.log(serverBackData)
           if (serverBackData.code === -1) {
             console.log('Token错误')
+            this.$router.push({
+              path: '/'
+            })
           } else if (serverBackData.hasOwnProperty('data')) {
             this.$store.dispatch('openUserInfo')
             this.$store.dispatch('setUserInfo', serverBackData.data)
@@ -85,6 +90,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  z-index: 999;
   h1 {
     font-size: 20px;
     color: #fff;
@@ -92,6 +98,8 @@ header {
   }
   li {
     color: #fff;
+    display: inline-block;
+    margin: 0 10px;
   }
   .click {
     cursor: pointer;

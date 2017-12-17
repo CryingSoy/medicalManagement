@@ -12,6 +12,13 @@ import doctorNav from '../../components/doctor-nav/doctor-nav.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'doctorPage',
+  methods: {
+    goTreat () {
+      this.$router.push({
+        path: '/treat'
+      })
+    }
+  },
   components: {
     myHeader,
     doctorNav
