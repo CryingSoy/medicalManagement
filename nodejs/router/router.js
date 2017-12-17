@@ -178,4 +178,15 @@ router.post('/searchStudentTreat', (req, res) => {
   })
 })
 
+router.post('/saveDrugData', (req, res) => {
+  const form = new formidable.IncomingForm()
+  let json = {}
+  form.parse(req, (err, data) => {
+    console.log(data)
+    res.json({
+      code: -1
+    })
+  })
+})
+
 module.exports = router
