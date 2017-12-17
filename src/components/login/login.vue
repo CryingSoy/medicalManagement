@@ -72,33 +72,39 @@ export default {
       this.$store.dispatch('closeLoginWindow')
     },
     submitReg () {
-      this.$axios.post('http://localhost:3000/login', {
-        userType: this.loginData.userType,
-        username: this.loginData.username,
-        password: this.loginData.password
-      }).then(res => {
-        if (res.status === 200 && res.statusText === 'OK') {
-          const { data } = res
-          let serverBackData = data
-          console.log(serverBackData)
-          if (serverBackData.code === -1) {
-            this.errorText = serverBackData.msg
-            this.error = true
-          } else if (!serverBackData.hasOwnProperty('data')) {
-            this.error = false
-            this.$store.dispatch('closeLoginWindow')
-          } else {
-            this.error = false
-            this.$store.dispatch('setToken', serverBackData.data.token)
-            this.$store.dispatch('closeLoginWindow')
-            this.$store.dispatch('setUserInfo', serverBackData.data)
-            this.$store.dispatch('openUserInfo')
-            localStorage.siseToken = serverBackData.data.token
-            this.$message({
-              message: `登录成功！用户名是${serverBackData.data.name}，用户类型是${serverBackData.data.typ}。`,
-              type: 'success'
-            })
-          }
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.$axios.post('http://localhost:3000/login', {
+            userType: this.loginData.userType,
+            username: this.loginData.username,
+            password: this.loginData.password
+          }).then(res => {
+            if (res.status === 200 && res.statusText === 'OK') {
+              const { data } = res
+              let serverBackData = data
+              console.log(serverBackData)
+              if (serverBackData.code === -1) {
+                this.errorText = serverBackData.msg
+                this.error = true
+              } else if (!serverBackData.hasOwnProperty('data')) {
+                this.error = false
+                this.$store.dispatch('closeLoginWindow')
+              } else {
+                this.error = false
+                this.$store.dispatch('setToken', serverBackData.data.token)
+                this.$store.dispatch('closeLoginWindow')
+                this.$store.dispatch('setUserInfo', serverBackData.data)
+                this.$store.dispatch('openUserInfo')
+                localStorage.siseToken = serverBackData.data.token
+                this.$message({
+                  message: `登录成功！用户名是${serverBackData.data.name}，用户类型是${serverBackData.data.typCN}。`,
+                  type: 'success'
+                })
+              }
+            }
+          })
+        } else {
+          console.log('填写错误')
         }
       })
     },

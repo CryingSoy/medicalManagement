@@ -57,9 +57,6 @@ export default {
           console.log(serverBackData)
           if (serverBackData.code === -1) {
             console.log('Token错误')
-            this.$router.push({
-              path: '/'
-            })
           } else if (serverBackData.hasOwnProperty('data')) {
             this.$store.dispatch('openUserInfo')
             this.$store.dispatch('setUserInfo', serverBackData.data)

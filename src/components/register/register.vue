@@ -93,17 +93,17 @@ export default {
           trigger: 'change'
         }],
         teacherCode: [{
-          required: true,
+          // required: true,
           message: '请输入教师凭证',
           trigger: 'blur'
         }],
         doctorCode: [{
-          required: true,
+          // required: true,
           message: '请输入医生凭证',
           trigger: 'blur'
         }],
         studentCode: [{
-          required: true,
+          // required: true,
           message: '请输入学号',
           trigger: 'blur'
         }]
@@ -118,30 +118,36 @@ export default {
       this.$store.dispatch('closeRegWindow')
     },
     submitReg () {
-      this.$axios.post('http://localhost:3000/register', {
-        userType: this.regData.userType,
-        username: this.regData.username,
-        password: this.regData.password,
-        birth: this.regData.birth.getFullYear() + '-' + ((this.regData.birth.getMonth() + 1) < 10 ? '0' + (this.regData.birth.getMonth() + 1) : (this.regData.birth.getMonth() + 1)),
-        code: this.regData[this.regData.userType + 'Code']
-      }).then(res => {
-        if (res.status === 200 && res.statusText === 'OK') {
-          const { data } = res
-          console.log(data)
-          if (data.code === -1) {
-            this.errorText = data.msg
-            this.error = true
-          } else if (data.code === 1) {
-            this.$message({
-              message: '注册成功',
-              type: 'success'
-            })
-            this.$refs.form.resetFields()
-            setTimeout(() => {
-              this.$store.dispatch('closeRegWindow')
-              this.$store.dispatch('openLoginWindow')
-            }, 1000)
-          }
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.$axios.post('http://localhost:3000/register', {
+            userType: this.regData.userType,
+            username: this.regData.username,
+            password: this.regData.password,
+            birth: this.regData.birth.getFullYear() + '-' + ((this.regData.birth.getMonth() + 1) < 10 ? '0' + (this.regData.birth.getMonth() + 1) : (this.regData.birth.getMonth() + 1)),
+            code: this.regData[this.regData.userType + 'Code']
+          }).then(res => {
+            if (res.status === 200 && res.statusText === 'OK') {
+              const { data } = res
+              console.log(data)
+              if (data.code === -1) {
+                this.errorText = data.msg
+                this.error = true
+              } else if (data.code === 1) {
+                this.$message({
+                  message: '注册成功',
+                  type: 'success'
+                })
+                this.$refs.form.resetFields()
+                setTimeout(() => {
+                  this.$store.dispatch('closeRegWindow')
+                  this.$store.dispatch('openLoginWindow')
+                }, 1000)
+              }
+            }
+          })
+        } else {
+          console.log('填写错误')
         }
       })
     },
