@@ -30,7 +30,7 @@ export default {
   watch: {
     isTokenValidated (value) {
       if (this.isShowUserInfo) {
-        if (this.userInfo.typ !== '学生') {
+        if (this.userInfo.typ !== 'student') {
           this.$message.error({
             message: '用户类型错误，请登录正确的用户类型'
           })
@@ -42,7 +42,7 @@ export default {
       }
     },
     isShowUserInfo (value) {
-      if (value && this.userInfo.typ === '学生') {
+      if (value && this.userInfo.typ === 'student') {
         if (!this.isLogin) {
           this.isLogin = true
         }

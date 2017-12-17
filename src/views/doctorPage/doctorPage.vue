@@ -41,7 +41,7 @@ export default {
   watch: {
     isTokenValidated (value) {
       if (this.isShowUserInfo) {
-        if (this.userInfo.typ !== '校医') {
+        if (this.userInfo.typ !== 'doctor') {
           this.$message.error({
             message: '用户类型错误，请登录正确的用户类型'
           })
@@ -53,7 +53,8 @@ export default {
       }
     },
     isShowUserInfo (value) {
-      if (value && this.userInfo.typ === '校医') {
+      console.log(this.userInfo)
+      if (value && this.userInfo.typ === 'doctor') {
         if (!this.isLogin) {
           this.isLogin = true
         }
@@ -69,6 +70,12 @@ export default {
 
 <style lang="less" scoped>
 .view {
-  padding: 50px 0 0 200px;
+  padding: 50px 0 0;
+}
+
+@media screen and (max-width: 1220px) {
+  .view {
+    padding-left: 200px;
+  }
 }
 </style>

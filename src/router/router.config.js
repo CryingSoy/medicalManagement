@@ -3,6 +3,7 @@ import doctorPage from '../views/doctorPage/doctorPage.vue'
 import teacherPage from '../views/teacherPage/teacherPage.vue'
 import studentPage from '../views/studentPage/studentPage.vue'
 import drugEntry from '../views/doctorPage/drug-entry/drug-entry.vue'
+import treat from '../views/doctorPage/treat/treat.vue'
 
 export default [
   {
@@ -30,6 +31,11 @@ export default [
         name: 'drugEntry',
         path: '/doctorPage/drugEntry',
         component: drugEntry
+      },
+      {
+        name: 'treat',
+        path: '/doctorPage/treat',
+        component: treat
       }
     ]
   }

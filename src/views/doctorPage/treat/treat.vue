@@ -1,6 +1,5 @@
 <template>
   <div id="treat">
-    <my-header></my-header>
     <el-dialog title="学生信息" align="center" :visible.sync="dialogTableVisible">
       <el-table :data="studentInfo">
         <el-table-column property="name" label="姓名"></el-table-column>
@@ -19,7 +18,7 @@
                   <span>{{ props.row.diseaseDetail }}</span>
                 </el-form-item>
               </el-col>
-              <el-form-item class="medicineDetail" style="width:100%" v-for="(value, index) in props.row.medicineDetail" :label="'药品'+index">
+              <el-form-item class="medicineDetail" style="width:100%" v-for="(value, index) in props.row.medicineDetail" :key="index" :label="'药品'+index">
                 <div>名称：{{ value.name }}</div>
                 <div>条形码：{{ value.barCode }}</div>
                 <div>使用数量：{{ value.howUsed }}</div>
@@ -161,8 +160,6 @@
 </template>
 
 <script>
-import myHeader from '../../components/header/Header.vue'
-import myFooter from '../../components/footer/footer.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'treat',
@@ -557,10 +554,6 @@ export default {
 
       return sums
     }
-  },
-  components: {
-    myHeader,
-    myFooter
   },
   computed: {
     ...mapGetters([

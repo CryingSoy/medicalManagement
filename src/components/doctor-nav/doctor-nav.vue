@@ -44,6 +44,10 @@ export default {
         this.$router.push({
           path: '/doctorPage/drugEntry'
         })
+      } else if (index === 'treat') {
+        this.$router.push({
+          path: '/doctorPage/treat'
+        })
       }
     }
   }
