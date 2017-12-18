@@ -182,10 +182,28 @@ router.post('/saveDrugData', (req, res) => {
   const form = new formidable.IncomingForm()
   let json = {}
   form.parse(req, (err, data) => {
-    console.log(data)
-    res.json({
-      code: -1
+    if (err) {
+      console.log(err)
+    }
+    store.drugSearch(data.barCode).then(searchResult => {
+      if (!searchResult) {
+        return store.insertDrugData(data)
+      } else {
+        data.inNum = parseInt(data.inNum) + parseInt(searchResult[0].num)
+        return store.updateDrugData(data)
+      }
+    }).then(flag => {
+      if (flag === 'updateComplete') {
+        json.code = 1
+        json.msg = `药品信息更新、数量增加成功`
+        res.json(json)
+      } else if (flag === 'insertComplete') {
+        json.code = 1
+        json.msg = '药品录入成功'
+        res.json(json)
+      }
     })
+    console.log(data)
   })
 })
 

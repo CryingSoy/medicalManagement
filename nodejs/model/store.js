@@ -1,3 +1,5 @@
+// import { resolve } from 'dns';
+
 const mysql = require('../mysql/mysqlConfig')
 const crypto = require('./crypto')
 const serect = require('./serect')
@@ -114,7 +116,8 @@ exports.drugSearch = searchItem => {
             money: item.money,
             useDetail: item.useDetail,
             factory: item.factory,
-            num: item.num
+            num: item.num.toString(),
+            introduce: item.introduce
           }
         })
         resolve(array)
@@ -162,6 +165,30 @@ exports.searchStudentTreat = studentId => {
         throw Error
       }
       resolve(rows)
+    })
+  })
+}
+
+exports.insertDrugData = drugData => {
+  return new Promise((resolve, reject) => {
+    let sqlcommand = `insert into drugs(barCode,name,money,useDetail,factory,num,lastStorageTime,introduce) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${drugData.useDetail}','${drugData.factory}','${drugData.inNum}','${drugData.storeTime}','${drugData.introduce}')`
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve('insertComplete')
+    })
+  })
+}
+
+exports.updateDrugData = drugData => {
+  return new Promise((resolve, reject) => {
+    let sqlcommand = `update drugs set name='${drugData.name}',money='${drugData.money}',useDetail='${drugData.useDetail}',factory='${drugData.factory}',num='${parseInt(drugData.inNum)}',lastStorageTime='${drugData.storeTime}',introduce='${drugData.introduce}' where barCode='${drugData.barCode}'`
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve('updateComplete')
     })
   })
 }

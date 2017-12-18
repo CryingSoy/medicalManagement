@@ -57,4 +57,13 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
+/* 清除type=number的默认上下箭头样式 */
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{
+  -webkit-appearance:textfield;
+}
+
+input[type="number"]{
+        -moz-appearance:textfield;
+}
 </style>

@@ -10,7 +10,10 @@
           <span class="factory">{{ props.item.factory }}</span>
         </template>
       </el-autocomplete>
-      <el-button type="primary">查询</el-button>
+      <el-button type="primary" @click="checkStr">查询</el-button>
+      <el-button @click="reset" style="margin-left: 0px">重置</el-button>
+      <el-alert :title="alertInfo" type="success" class="alert-info" v-show="showAlertInfo" @close="closeAlertInfo">
+  </el-alert>
     </div>
     <div class="drug-form">
       <el-form ref="form" :model="drugData" label-position="right" label-width="80px" :rules="rules">
@@ -21,7 +24,7 @@
           <el-input v-model="drugData.barCode" class="el-input" clearable placeholder="请输入药物条形码"></el-input>
         </el-form-item>
         <el-form-item label="单价" prop="money">
-          <el-input v-model="drugData.money" class="el-input" clearable placeholder="请输入药物单价"></el-input>
+          <el-input type="number" v-model="drugData.money" class="el-input" clearable placeholder="请输入药物单价"></el-input>
         </el-form-item>
         <el-form-item label="生产厂商" prop="factory">
           <el-input v-model="drugData.factory" class="el-input" clearable placeholder="请输入药物生产厂商"></el-input>
@@ -57,6 +60,9 @@ export default {
       drug: '',
       drugs: [],
       drugData: {
+        factory: '',
+        introduce: '',
+        useDetail: '',
         storeTime: new Date()
       },
       lastDrugNum: 0,
@@ -76,13 +82,15 @@ export default {
         inNum: [
           { required: true, message: '请输入存入数量', trigger: 'change' }
         ]
-      }
+      },
+      alertInfo: '数据库不存在该条形码的药品，请准确填写药品信息。',
+      showAlertInfo: false
     }
   },
   methods: {
     queryDrug (str, callback) {
-      let durgList = this.drugs
-      let result = str ? durgList.filter(this.createFilter(str)) : durgList
+      let drugList = this.drugs
+      let result = str ? drugList.filter(this.createFilter(str)) : drugList
       callback(result)
     },
     createFilter (str) {
@@ -97,7 +105,10 @@ export default {
       this.drugData.money = item.money
       this.drugData.factory = item.factory
       this.drugData.useDetail = item.useDetail
+      this.drugData.introduce = item.introduce
       this.lastDrugNum = item.num
+      this.showAlertInfo = true
+      this.alertInfo = `药品${item.name}[${item.barCode}]信息已存在数据库，更改以下某一条信息，都会影响到数据库。如只需添加库存，建议只更改存入数量。`
     },
     queryDrugData () {
       this.$axios.post('http://localhost:3000/drugSearch').then(res => {
@@ -111,10 +122,20 @@ export default {
     handleChange (value) {
     },
     submitDrugData () {
+      this.drugData.inNum = this.drugData.inNum.toString()
       this.$refs.form.validate(valid => {
         if (valid) {
           this.$axios.post('http://localhost:3000/saveDrugData', this.drugData).then(res => {
-            console.log(res)
+            if (res.status === 200 && res.statusText === 'OK' && res.data.code === 1) {
+              this.$message({
+                message: res.data.msg,
+                type: 'success'
+              })
+              this.queryDrugData()
+              setTimeout(() => {
+                this.reset()
+              }, 1500)
+            }
           })
         } else {
           console.log('输入错误')
@@ -124,7 +145,12 @@ export default {
     reset () {
       this.$refs.form.resetFields()
       this.drug = ''
-    }
+      this.lastDrugNum = 0
+    },
+    closeAlertInfo () {
+      this.showAlertInfo = false
+    },
+    checkStr () {}
   },
   mounted () {
     this.queryDrugData()
@@ -135,10 +161,10 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  max-width: 1120px;
+  width: 800px;
   margin: 0 auto;
   text-align: left;
-  padding-left: 200px;
+  // padding-left: 200px;
   .title {
     font-size: 24px;
     color: #24B4AA;
@@ -149,9 +175,13 @@ export default {
       width: 500px;
       margin: 20px 0 0 80px;
     }
+    .alert-info {
+      width: 480px;
+      margin: 10px 0 0 80px;
+    }
   }
   .drug-form {
-    margin-top: 50px;
+    margin-top: 10px;
     .el-input {
       width: 500px;
     }
@@ -159,7 +189,7 @@ export default {
       margin-left: 30px;
     }
     .lastDrugNum {
-      width: 50px;
+      width: 60px;
       margin-left: 10px;
     }
     .submit-btn {
