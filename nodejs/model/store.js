@@ -182,6 +182,10 @@ exports.insertDrugData = drugData => {
 }
 
 exports.updateDrugData = drugData => {
+  if (!drugData) {
+    console.error('参数错误')
+    return
+  }
   return new Promise((resolve, reject) => {
     let sqlcommand = `update drugs set name='${drugData.name}',money='${drugData.money}',useDetail='${drugData.useDetail}',factory='${drugData.factory}',num='${parseInt(drugData.inNum)}',lastStorageTime='${drugData.storeTime}',introduce='${drugData.introduce}' where barCode='${drugData.barCode}'`
     mysql.connection.query(sqlcommand, (error, rows, fields) => {
@@ -189,6 +193,34 @@ exports.updateDrugData = drugData => {
         throw Error
       }
       resolve('updateComplete')
+    })
+  })
+}
+
+// type { String} in或者out in代表录入 out代表支出
+// drugData {Object} 药物信息对象
+// barCode name money num total 都要传入  录入药品对象要有inputer  使用药品对象要有user
+exports.insertDrugFlow = (type, drugData) => {
+  if (!type || !drugData) {
+    console.error('请传入参数')
+    return
+  } else if (!(type === 'in' || type === 'out')) {
+    console.error('type参数是in或者out')
+    return
+  }
+  let sqlcommand = ''
+  if (type === 'in') {
+    sqlcommand = `insert into drugFlow(barCode,name,money,inTime,num,total,inputer) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${new Date().toString()}','${drugData.num}','${drugData.total}','${drugData.inputer}')`
+  } else if (type === 'out') {
+    sqlcommand = `insert into drugFlow(barCode,name,money,outTime,num,total,user) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${new Date().toString()}','${drugData.num}','${drugData.total}','${drugData.user}')`
+  }
+  // console.log(sqlcommand)
+  return new Promise((resolve, reject) => {
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve(true)
     })
   })
 }

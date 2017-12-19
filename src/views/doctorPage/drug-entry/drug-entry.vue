@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'drugEntry',
   data () {
@@ -122,9 +123,10 @@ export default {
     handleChange (value) {
     },
     submitDrugData () {
-      this.drugData.inNum = this.drugData.inNum.toString()
       this.$refs.form.validate(valid => {
         if (valid) {
+          this.drugData.inNum = this.drugData.inNum.toString()
+          this.drugData.inputer = this.userInfo.name
           this.$axios.post('http://localhost:3000/saveDrugData', this.drugData).then(res => {
             if (res.status === 200 && res.statusText === 'OK' && res.data.code === 1) {
               this.$message({
@@ -154,6 +156,11 @@ export default {
   },
   mounted () {
     this.queryDrugData()
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   }
 }
 </script>

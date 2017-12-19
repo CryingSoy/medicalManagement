@@ -22,13 +22,13 @@ router.post('/register', (req, res) => {
     }
     console.log(data)
     let flag = false
-    //用户名正则，4到10位（字母，数字，下划线，减号）
+    // 用户名正则，4到10位（字母，数字，下划线，减号
     let uPattern = /^[a-zA-Z0-9_-]{4,10}$/
     if (!uPattern.test(data.username)) {
       json.code = -1
       json.msg = '用户名格式错误'
       res.json(json)
-    } else if (data.password === '' || data.password.length < 4 || data.password.length >16) {
+    } else if (data.password === '' || data.password.length < 4 || data.password.length > 16) {
       json.code = -1
       json.msg = '密码格式错误'
       res.json(json)
@@ -189,17 +189,24 @@ router.post('/saveDrugData', (req, res) => {
       if (!searchResult) {
         return store.insertDrugData(data)
       } else {
+        data.num = parseInt(data.inNum)
         data.inNum = parseInt(data.inNum) + parseInt(searchResult[0].num)
+        data.total = data.inNum
         return store.updateDrugData(data)
       }
     }).then(flag => {
       if (flag === 'updateComplete') {
         json.code = 1
         json.msg = `药品信息更新、数量增加成功`
-        res.json(json)
+        return store.insertDrugFlow('in', data)
       } else if (flag === 'insertComplete') {
         json.code = 1
         json.msg = '药品录入成功'
+        data.total = parseInt(data.num)
+        return store.insertDrugFlow('in', data)
+      }
+    }).then(flag => {
+      if (flag) {
         res.json(json)
       }
     })
