@@ -141,7 +141,7 @@ router.post('/studentSearch', (req, res) => {
   const form = new formidable.IncomingForm()
   let json = {}
   form.parse(req, (err, data) => {
-    store.studentSearch(data.studentId)
+    store.studentSearch(data)
     .then(studentInfo => {
       console.log(studentInfo)
       if (studentInfo.length > 0) {

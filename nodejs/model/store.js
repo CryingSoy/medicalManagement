@@ -1,5 +1,3 @@
-// import { resolve } from 'dns';
-
 const mysql = require('../mysql/mysqlConfig')
 const crypto = require('./crypto')
 const serect = require('./serect')
@@ -145,9 +143,14 @@ exports.treatSave = treatData => {
   })
 }
 
-exports.studentSearch = studentId => {
+exports.studentSearch = student => {
   return new Promise((resolve, reject) => {
-    let sqlcommand = `select * from studentInfo where studentId = '${studentId}'`
+    console.log(student)
+    if (student.hasOwnProperty('name')) {
+      var sqlcommand = `select * from studentInfo where name = '${student.name}'`
+    } else {
+      var sqlcommand = `select * from studentInfo where studentId = '${student.studentId}'`
+    }
     mysql.connection.query(sqlcommand, (error, rows, fields) => {
       if (error) {
         throw Error
