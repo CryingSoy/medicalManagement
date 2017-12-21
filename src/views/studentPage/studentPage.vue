@@ -43,14 +43,42 @@
           </el-form-item>
           <el-form-item>
             <el-button v-if="!isEdit" type="primary" icon="el-icon-edit-outline" @click="isEdit=true">编辑</el-button>
-            <el-button v-if="isEdit" type="primary">完成</el-button>
+            <el-button v-if="isEdit" type="primary" @click="submitEdit">完成</el-button>
             <el-button v-if="isEdit" @click="isEdit=false">取消</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="就诊记录" name="second">
         <span slot="label"><i class="el-icon-date"></i> 就诊信息</span>
-        就珍惜你
+        <el-table :data="studentTreat" style="width: 100%">
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="table-expand">
+              <el-col :span="24">
+                <el-form-item label="详细症状" class="diseaseInfo">
+                  <span>{{ props.row.diseaseDetail }}</span>
+                </el-form-item>
+              </el-col>
+              <el-form-item class="medicineDetail" style="width:100%" v-for="(value, index) in props.row.medicineDetail" :key="index" :label="'药品'+index">
+                <div>名称：{{ value.name }}</div>
+                <div>条形码：{{ value.barCode }}</div>
+                <div>使用数量：{{ value.howUsed }}</div>
+                <div>单价：{{ value.price }}</div>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
+        <el-table-column prop="time" label="日期" sortable>
+        </el-table-column>
+        <el-table-column prop="total" label="总价" sortable>
+        </el-table-column>
+        <el-table-column prop="disease" label="病因" sortable>
+        </el-table-column>
+        <el-table-column prop="doctorId" label="校医名" sortable>
+        </el-table-column>
+        <el-table-column prop="leaveDay" label="请假天数" sortable>
+        </el-table-column>
+      </el-table>
       </el-tab-pane>
       <el-tab-pane label="该功能待开发" name="third">该功能待开发</el-tab-pane>
       <el-tab-pane label="该功能待开发" name="fourth">该功能待开发</el-tab-pane>
@@ -78,7 +106,8 @@ export default {
         depart: '',
         studentId: '',
         studentDetail: ''
-      }
+      },
+      studentTreat: []
     }
   },
   computed: {
@@ -90,27 +119,43 @@ export default {
   },
   mounted () {
     if (!localStorage.siseToken) this.$store.dispatch('openLoginWindow')
+    setTimeout(() => {
+      this.$axios.post('http://localhost:3000/studentSearch', {
+        name: this.userInfo.name
+      }).then(res => {
+        if (res.status === 200 && res.statusText === 'OK') {
+          const { data } = res
+          let serverBackData = data
+          console.log(serverBackData)
+          if (serverBackData.code === 1) {
+            this.studentInfo.name = serverBackData.data[0].name
+            this.studentInfo.sex = serverBackData.data[0].sex
+            this.studentInfo.age = serverBackData.data[0].age
+            this.studentInfo.depart = serverBackData.data[0].depart
+            this.studentInfo.studentId = serverBackData.data[0].studentId
+          }
+        }
+      })
+    }, 300)
   },
   methods: {
     handleClick (tab, event) {
-      if (this.activeName === 'first') {
-        this.$axios.post('http://localhost:3000/studentSearch', {
-          name: this.userInfo.name
-        }).then(res => {
-          if (res.status === 200 && res.statusText === 'OK') {
-            const { data } = res
-            let serverBackData = data
-            console.log(serverBackData)
-            if (serverBackData.code === 1) {
-              this.studentInfo.name = serverBackData.data[0].name
-              this.studentInfo.sex = serverBackData.data[0].sex
-              this.studentInfo.age = serverBackData.data[0].age
-              this.studentInfo.depart = serverBackData.data[0].depart
-              this.studentInfo.studentId = serverBackData.data[0].studentId
-            }
-          }
-        })
-      }
+      console.log(tab)
+    },
+    submitEdit () {
+      this.$axios.post('http://localhost:3000/updateStudentInfo', {
+        name: this.studentInfo.name,
+        sex: this.studentInfo.sex,
+        age: this.studentInfo.age,
+        depart: this.studentInfo.depart,
+        studentId: this.studentInfo.studentId
+      }).then(res => {
+        if (res.status === 200 && res.statusText === 'OK') {
+          const { data } = res
+          let serverBackData = data
+          console.log(serverBackData)
+        }
+      })
     }
   },
   watch: {
@@ -146,6 +191,7 @@ export default {
 #student {
   display: flex;
   justify-content: space-around;
+  margin-top: 40px;
   .tabs {
     margin-top: 60px;
     width: 70%;
@@ -154,9 +200,23 @@ export default {
 }
 
 .studentInfoForm {
+  margin-top: 50px;
   .el-form-item {
     margin-left: 120px;
     padding-right:120px
   }
+}
+
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
 }
 </style>

@@ -137,6 +137,46 @@ router.post('/treatSave', (req, res) => {
   })
 })
 
+router.post('/searchStudentTreat', (req, res) => {
+  const form = new formidable.IncomingForm()
+  let json = {}
+  form.parse(req, (err, data) => {
+    store.searchStudentTreat(data.studentId)
+    .then(studentTreat => {
+      if (studentTreat.length > 0) {
+        json.code = 1
+        json.msg = '学生就诊信息查询成功'
+        json.data = studentTreat
+        res.json(json)
+      } else {
+        json.code = -1
+        json.msg = '未查询到就诊信息'
+        res.json(json)
+      }
+    })
+  })
+})
+
+router.post('/updateStudentInfo', (req, res) => {
+  const form = new formidable.IncomingForm()
+  let json = {}
+  form.parse(req, (err, data) => {
+    store.updateStudentInfo(data)
+    .then(isUptate => {
+      console.log(isUptate)
+      if (isUptate) {
+        json.code = 1
+        json.msg = '学生就诊信息更新成功'
+        res.json(json)
+      } else {
+        json.code = -1
+        json.msg = '更新失败'
+        res.json(json)
+      }
+    })
+  })
+})
+
 router.post('/studentSearch', (req, res) => {
   const form = new formidable.IncomingForm()
   let json = {}

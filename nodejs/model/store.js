@@ -160,6 +160,20 @@ exports.studentSearch = student => {
   })
 }
 
+exports.updateStudentInfo = student => {
+  return new Promise((resolve, reject) => {
+    let {name, studentId, sex, age, depart} = student
+    let sqlcommand = `update studentInfo set name = '${name}', studentId = '${studentId}', sex = '${sex}', age = '${age}', depart = '${depart}' where studentId = '${studentId}'`
+    console.log(sqlcommand)
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve(true)
+    })
+  })
+}
+
 exports.searchStudentTreat = studentId => {
   return new Promise((resolve, reject) => {
     let sqlcommand = `select * from treat where studentId = '${studentId}'`
