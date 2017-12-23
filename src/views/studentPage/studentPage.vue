@@ -68,15 +68,15 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column prop="time" label="日期" sortable>
+        <el-table-column align="center" prop="time" label="日期" sortable>
         </el-table-column>
-        <el-table-column prop="total" label="总价" sortable>
+        <el-table-column align="center" prop="total" label="总价" sortable>
         </el-table-column>
-        <el-table-column prop="disease" label="病因" sortable>
+        <el-table-column align="center" prop="disease" label="病因" sortable>
         </el-table-column>
-        <el-table-column prop="doctorId" label="校医名" sortable>
+        <el-table-column align="center" prop="doctorId" label="校医名" sortable>
         </el-table-column>
-        <el-table-column prop="leaveDay" label="请假天数" sortable>
+        <el-table-column align="center" prop="leaveDay" label="请假天数" sortable>
         </el-table-column>
       </el-table>
       </el-tab-pane>
@@ -137,6 +137,38 @@ export default {
         }
       })
     }, 300)
+
+    setTimeout(() => {
+      this.$axios.post('http://localhost:3000/searchStudentTreat', {
+        studentId: this.studentInfo.studentId
+      }).then(res => {
+        if (res.status === 200 && res.statusText === 'OK') {
+          const { data } = res
+          let serverBackData = data
+          console.log(serverBackData)
+          if (serverBackData.code === 1) {
+            serverBackData.data.map(item => {
+              let {time, total, disease, diseaseDetail, medicineDetail, doctorId, leaveDay} = item
+              let medicineDetailArray = medicineDetail.split('+')
+              // console.log(medicineDetailArray)
+              medicineDetail = medicineDetailArray.map(items => {
+                return JSON.parse(items)
+              })
+              // console.log(medicineDetail)
+              this.studentTreat.push({
+                time,
+                total,
+                disease,
+                diseaseDetail,
+                medicineDetail,
+                doctorId,
+                leaveDay
+              })
+            })
+          }
+        }
+      })
+    }, 400)
   },
   methods: {
     handleClick (tab, event) {
@@ -154,6 +186,13 @@ export default {
           const { data } = res
           let serverBackData = data
           console.log(serverBackData)
+          if (serverBackData.code === 1) {
+            this.$message({
+              message: '修改个人信息成功',
+              type: 'success'
+            })
+            this.isEdit = false
+          }
         }
       })
     }
@@ -207,16 +246,26 @@ export default {
   }
 }
 
-.demo-table-expand {
+.medicineDetail {
+  margin-top: 20px;
+}
+
+.table-expand {
   font-size: 0;
 }
-.demo-table-expand label {
+.table-expand label {
   width: 90px;
   color: #99a9bf;
 }
-.demo-table-expand .el-form-item {
+.table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   width: 50%;
+}
+
+.diseaseInfo {
+  width: 100% !important;
+  border-bottom:1px solid #d9d9d9;
+  padding-bottom: 20px;
 }
 </style>

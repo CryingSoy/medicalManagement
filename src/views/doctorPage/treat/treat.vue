@@ -288,21 +288,23 @@ export default {
           console.log(serverBackData)
           if (serverBackData.code === 1) {
             this.studentTreatVisible = true
-            let {time, total, disease, diseaseDetail, medicineDetail, doctorId, leaveDay} = serverBackData.data[0]
-            let medicineDetailArray = medicineDetail.split('+')
-            console.log(medicineDetailArray)
-            medicineDetail = medicineDetailArray.map(item => {
-              return JSON.parse(item)
-            })
-            console.log(medicineDetail)
-            this.studentTreat.push({
-              time,
-              total,
-              disease,
-              diseaseDetail,
-              medicineDetail,
-              doctorId,
-              leaveDay
+            serverBackData.data.map(item => {
+              let {time, total, disease, diseaseDetail, medicineDetail, doctorId, leaveDay} = item
+              let medicineDetailArray = medicineDetail.split('+')
+              // console.log(medicineDetailArray)
+              medicineDetail = medicineDetailArray.map(items => {
+                return JSON.parse(items)
+              })
+              // console.log(medicineDetail)
+              this.studentTreat.push({
+                time,
+                total,
+                disease,
+                diseaseDetail,
+                medicineDetail,
+                doctorId,
+                leaveDay
+              })
             })
           } else if (serverBackData.code === -1) {
             this.$message({
