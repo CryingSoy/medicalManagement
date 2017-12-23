@@ -15,7 +15,7 @@
           <span slot="title">药物管理</span>
         </template>
           <el-menu-item index="drug-entry">药品录入</el-menu-item>
-          <el-menu-item index="2-2">药品查询</el-menu-item>
+          <el-menu-item index="drug-search">药品查询</el-menu-item>
           <el-menu-item index="2-3">药品流向</el-menu-item>
       </el-submenu>
       <el-menu-item index="3">
@@ -47,6 +47,10 @@ export default {
       } else if (index === 'treat') {
         this.$router.push({
           path: '/doctorPage/treat'
+        })
+      } else if (index === 'drug-search') {
+        this.$router.push({
+          path: '/doctorPage/drugSearch'
         })
       }
     }

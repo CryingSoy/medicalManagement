@@ -214,4 +214,46 @@ router.post('/saveDrugData', (req, res) => {
   })
 })
 
+router.post('/changeDrugData', (req, res) => {
+  const form = new formidable.IncomingForm()
+  form.parse(req, (err, data) => {
+    if (err) {
+      console.log(err)
+    }
+    data.inNum = data.num
+    store.updateDrugData(data).then(flag => {
+      if (flag === 'updateComplete') {
+        res.json({
+          code: 1,
+          msg: '药物信息更改完成'
+        })
+      }
+    })
+    console.log(data)
+  })
+})
+
+router.post('/deleteDrug', (req, res) => {
+  const form = new formidable.IncomingForm()
+  form.parse(req, (err, { barCode }) => {
+    if (err) {
+      console.log(err)
+    }
+    let json = {}
+    if (!barCode) {
+      json.code = -1
+      json.msg = '参数错误，请输入条形码'
+      res.json(json)
+    } else {
+      store.deleteDrugData(barCode).then(flag => {
+        if (flag) {
+          json.code = 1
+          json.msg = '药物信息已从数据库删除'
+          res.json(json)
+        }
+      })
+    }
+  })
+})
+
 module.exports = router
