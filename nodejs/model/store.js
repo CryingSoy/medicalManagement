@@ -225,6 +225,23 @@ exports.insertDrugFlow = (type, drugData) => {
   })
 }
 
+// barCode { String } 条形码
+exports.deleteDrugData = (barCode) => {
+  if (!(barCode && typeof barCode === 'string')) {
+    console.error('参数错误')
+    return
+  }
+  return new Promise((resolve, reject) => {
+    let sqlcommand = `delete from drugs where barCode='${barCode}'`
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve(true)
+    })
+  })
+}
+
 function updateToken(data) {
   let now = new Date()
   let issued = (now.getTime()).toString()

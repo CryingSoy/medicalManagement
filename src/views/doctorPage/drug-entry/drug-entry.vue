@@ -12,8 +12,7 @@
       </el-autocomplete>
       <el-button type="primary" @click="checkStr">查询</el-button>
       <el-button @click="reset" style="margin-left: 0px">重置</el-button>
-      <el-alert :title="alertInfo" type="success" class="alert-info" v-show="showAlertInfo" @close="closeAlertInfo">
-  </el-alert>
+      <el-alert :title="alertInfo" type="success" class="alert-info" v-show="showAlertInfo" @close="closeAlertInfo"></el-alert>
     </div>
     <div class="drug-form">
       <el-form ref="form" :model="drugData" label-position="right" label-width="80px" :rules="rules">
