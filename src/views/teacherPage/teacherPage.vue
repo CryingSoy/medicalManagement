@@ -63,16 +63,19 @@
         <el-table-column label="请假日期" prop="leaveDay"></el-table-column>
       </el-table>
     </div>
+    <doctor-status></doctor-status>
   </div>
 </template>
 
 <script>
 import myHeader from '../../components/header/Header.vue'
+import doctorStatus from '../../components/doctor-status/doctor-status.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'teacherPage',
   components: {
-    myHeader
+    myHeader,
+    doctorStatus
   },
   data () {
     return {

@@ -9,6 +9,8 @@ const store = require('../model/store')
 const md5 = require('../model/md5')
 // 访问静态文件
 router.use(express.static(__dirname + '/public/'))
+// 坐镇定时器
+let treatTimer = null
 
 // 用户注册
 router.post('/register', (req, res) => {
@@ -253,6 +255,55 @@ router.post('/deleteDrug', (req, res) => {
         }
       })
     }
+  })
+})
+
+// 1坐镇中 2休息中 0下班了
+router.post('/changeDoctorStatus', (req, res) => {
+  const form = new formidable.IncomingForm()
+  form.parse(req, (err, { username, status, duration }) => {
+    if (err) {
+      console.log(err)
+    }
+    let json = {}
+    if (!username) {
+      json.code = -1
+      json.msg = '参数错误，请输入username'
+      res.json(json)
+    } else {
+      treatTimer = store.changeDoctorStatus(username, status).then(flag => {
+        if (flag) {
+          if (status === 0) {
+            clearTimeout(treatTimer)
+          } else {
+            treatTimer = setTimeout(() => {
+              store.changeDoctorStatus(username, 0)
+            }, duration * 6000)
+          }
+          json.code = 1
+          json.msg = '状态更改成功'
+          res.json(json)
+        } else {
+          json.code = -1
+          json.msg = '更改失败'
+          res.json(json)
+        }
+      })
+    }
+  })
+})
+
+// 1 坐诊中
+// 2 休息中
+// 3 下班了
+// 12 坐诊中和休息中
+router.get('/getDoctorStatus', (req, res) => {
+  store.getDoctorStatus(req.query.status).then(data => {
+    res.json({
+      code: 1,
+      msg: `一共查询到${data.length}条信息`,
+      data
+    })
   })
 })
 

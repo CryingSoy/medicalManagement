@@ -226,7 +226,7 @@ exports.insertDrugFlow = (type, drugData) => {
 }
 
 // barCode { String } 条形码
-exports.deleteDrugData = (barCode) => {
+exports.deleteDrugData = barCode => {
   if (!(barCode && typeof barCode === 'string')) {
     console.error('参数错误')
     return
@@ -238,6 +238,45 @@ exports.deleteDrugData = (barCode) => {
         throw Error
       }
       resolve(true)
+    })
+  })
+}
+
+// changeDoctorStatus
+exports.changeDoctorStatus = (username, status) => {
+  if (!(username !== '')) {
+    console.error('参数错误')
+  }
+  return new Promise((resolve, reject) => {
+    let sqlcommand = `update userInfo set status = '${status}' where username = '${username}'`
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve(true)
+    })
+  })
+}
+
+// 1 坐诊中
+// 2 休息中
+// 3 下班了
+// 12 坐诊中和休息中
+exports.getDoctorStatus = status => {
+  if (!status) return
+  let sqlcommand = ''
+  if (status === '12') {
+    sqlcommand = `select * from userInfo where status = '1' or status = '2'`
+  } else {
+    sqlcommand = `select * from userInfo where status = ${status}`
+  }
+  return new Promise((resolve, reject) => {
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      console.log(rows)
+      resolve(rows)
     })
   })
 }

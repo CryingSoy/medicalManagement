@@ -18,7 +18,7 @@
           <el-menu-item index="drug-search">药品查询</el-menu-item>
           <el-menu-item index="2-3">药品流向</el-menu-item>
       </el-submenu>
-      <el-menu-item index="3">
+      <el-menu-item index="doctor-info">
         <i class="el-icon-menu"></i>
         <span slot="title">个人信息</span>
       </el-menu-item>
@@ -51,6 +51,10 @@ export default {
       } else if (index === 'drug-search') {
         this.$router.push({
           path: '/doctorPage/drugSearch'
+        })
+      } else if (index === 'doctor-info') {
+        this.$router.push({
+          path: '/doctorPage/doctorInfo'
         })
       }
     }
