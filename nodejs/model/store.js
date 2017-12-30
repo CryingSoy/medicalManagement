@@ -197,7 +197,7 @@ exports.updateDrugData = drugData => {
   })
 }
 
-// type { String} in或者out in代表录入 out代表支出
+// type { String } in或者out in代表录入 out代表支出
 // drugData {Object} 药物信息对象
 // barCode name money num total 都要传入  录入药品对象要有inputer  使用药品对象要有user
 exports.insertDrugFlow = (type, drugData) => {
