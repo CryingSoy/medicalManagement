@@ -5,13 +5,13 @@
     <el-button type="primary">查询</el-button>
     <el-button style="margin-left: 0px">重置</el-button>
     <el-table :data="drugData" style="width: 100%; margin-top: 20px">
-      <el-table-column prop="name" label="药物名称" width="180px"></el-table-column>
-      <el-table-column prop="barCode" label="条形码" width="180px"></el-table-column>
-      <el-table-column prop="money" label="单价" width="100px"></el-table-column>
-      <el-table-column prop="num" label="剩余数量" width="100px"></el-table-column>
-      <el-table-column prop="useDetail" label="使用详情" width="120px"></el-table-column>
-      <el-table-column prop="factory" label="生产厂商" width="120px"></el-table-column>
-      <el-table-column label="操作" width="200px">
+      <el-table-column prop="name" label="药物名称" min-width="180px"></el-table-column>
+      <el-table-column prop="barCode" label="条形码" min-width="180px"></el-table-column>
+      <el-table-column prop="money" label="单价" min-width="100px"></el-table-column>
+      <el-table-column prop="num" label="剩余数量" min-width="100px"></el-table-column>
+      <el-table-column prop="useDetail" label="使用详情" min-width="120px"></el-table-column>
+      <el-table-column prop="factory" label="生产厂商" min-width="120px"></el-table-column>
+      <el-table-column label="操作" min-width="200px">
       <template slot-scope="scope">
         <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除药物</el-button>
@@ -195,8 +195,8 @@ function deepCopy (data) {
 
 <style lang="less" scoped>
 .container {
-  max-width: 1120px;
-  margin-left: 240px;
+  max-width: 100%;
+  padding-left: 240px;
   text-align: left;
   .title {
     font-size: 24px;
