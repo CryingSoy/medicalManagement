@@ -164,7 +164,7 @@ router.post('/updateStudentInfo', (req, res) => {
   form.parse(req, (err, data) => {
     store.updateStudentInfo(data)
     .then(isUptate => {
-      console.log(isUptate)
+      // console.log(isUptate)
       if (isUptate) {
         json.code = 1
         json.msg = '学生就诊信息更新成功'
@@ -184,7 +184,7 @@ router.post('/studentSearch', (req, res) => {
   form.parse(req, (err, data) => {
     store.studentSearch(data)
     .then(studentInfo => {
-      console.log(studentInfo)
+      // console.log(studentInfo)
       if (studentInfo.length > 0) {
         json.code = 1
         json.msg = '学生信息查询成功'
@@ -251,7 +251,7 @@ router.post('/saveDrugData', (req, res) => {
         res.json(json)
       }
     })
-    console.log(data)
+    // console.log(data)
   })
 })
 
@@ -270,7 +270,7 @@ router.post('/changeDrugData', (req, res) => {
         })
       }
     })
-    console.log(data)
+    // console.log(data)
   })
 })
 
@@ -317,7 +317,7 @@ router.post('/changeDoctorStatus', (req, res) => {
           } else {
             treatTimer = setTimeout(() => {
               store.changeDoctorStatus(username, 0)
-            }, duration * 6000)
+            }, duration * 60000)
           }
           json.code = 1
           json.msg = '状态更改成功'

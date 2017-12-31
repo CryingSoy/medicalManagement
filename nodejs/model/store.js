@@ -165,7 +165,7 @@ exports.updateDrugsNum = drugsDetail => {
 
 exports.studentSearch = student => {
   return new Promise((resolve, reject) => {
-    console.log(student)
+    // console.log(student)
     if (student.hasOwnProperty('name')) {
       var sqlcommand = `select * from studentInfo where name = '${student.name}'`
     } else {

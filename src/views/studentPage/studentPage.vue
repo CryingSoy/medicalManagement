@@ -1,7 +1,7 @@
 <template>
   <div id="student">
     <my-header></my-header>
-    <el-tabs class="tabs" type="border-card" v-model="activeName" @tab-click="handleClick">
+    <el-tabs class="tabs" type="border-card" v-model="activeName" @tab-click="handleClick" v-if="isLogin">
       <el-tab-pane name="first">
         <span slot="label"><i class="el-icon-document"></i> 个人信息</span>
         <el-form class="studentInfoForm" ref="form" :model="studentInfo">
@@ -83,16 +83,19 @@
       <el-tab-pane label="该功能待开发" name="third">该功能待开发</el-tab-pane>
       <el-tab-pane label="该功能待开发" name="fourth">该功能待开发</el-tab-pane>
     </el-tabs>
+    <doctor-status v-if="isLogin"></doctor-status>
   </div>
 </template>
 
 <script>
 import myHeader from '../../components/header/Header.vue'
+import doctorStatus from '../../components/doctor-status/doctor-status.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'studentPage',
   components: {
-    myHeader
+    myHeader,
+    doctorStatus
   },
   data () {
     return {
@@ -119,58 +122,61 @@ export default {
   },
   mounted () {
     if (!localStorage.siseToken) this.$store.dispatch('openLoginWindow')
-    setTimeout(() => {
-      this.$axios.post('http://localhost:3000/studentSearch', {
-        name: this.userInfo.name
-      }).then(res => {
-        if (res.status === 200 && res.statusText === 'OK') {
-          const { data } = res
-          let serverBackData = data
-          console.log(serverBackData)
-          if (serverBackData.code === 1) {
-            this.studentInfo.name = serverBackData.data[0].name
-            this.studentInfo.sex = serverBackData.data[0].sex
-            this.studentInfo.age = serverBackData.data[0].age
-            this.studentInfo.depart = serverBackData.data[0].depart
-            this.studentInfo.studentId = serverBackData.data[0].studentId
-          }
-        }
-      })
-    }, 300)
-
-    setTimeout(() => {
-      this.$axios.post('http://localhost:3000/searchStudentTreat', {
-        studentId: this.studentInfo.studentId
-      }).then(res => {
-        if (res.status === 200 && res.statusText === 'OK') {
-          const { data } = res
-          let serverBackData = data
-          console.log(serverBackData)
-          if (serverBackData.code === 1) {
-            serverBackData.data.map(item => {
-              let {time, total, disease, diseaseDetail, medicineDetail, doctorId, leaveDay} = item
-              let medicineDetailArray = medicineDetail.split('+')
-              // console.log(medicineDetailArray)
-              medicineDetail = medicineDetailArray.map(items => {
-                return JSON.parse(items)
-              })
-              // console.log(medicineDetail)
-              this.studentTreat.push({
-                time,
-                total,
-                disease,
-                diseaseDetail,
-                medicineDetail,
-                doctorId,
-                leaveDay
-              })
-            })
-          }
-        }
-      })
-    }, 400)
+    this.fetchData()
   },
   methods: {
+    fetchData () {
+      setTimeout(() => {
+        this.$axios.post('http://localhost:3000/studentSearch', {
+          name: this.userInfo.name
+        }).then(res => {
+          if (res.status === 200 && res.statusText === 'OK') {
+            const { data } = res
+            let serverBackData = data
+            console.log(serverBackData)
+            if (serverBackData.code === 1) {
+              this.studentInfo.name = serverBackData.data[0].name
+              this.studentInfo.sex = serverBackData.data[0].sex
+              this.studentInfo.age = serverBackData.data[0].age
+              this.studentInfo.depart = serverBackData.data[0].depart
+              this.studentInfo.studentId = serverBackData.data[0].studentId
+            }
+          }
+        })
+      }, 300)
+
+      setTimeout(() => {
+        this.$axios.post('http://localhost:3000/searchStudentTreat', {
+          studentId: this.studentInfo.studentId
+        }).then(res => {
+          if (res.status === 200 && res.statusText === 'OK') {
+            const { data } = res
+            let serverBackData = data
+            console.log(serverBackData)
+            if (serverBackData.code === 1) {
+              serverBackData.data.map(item => {
+                let {time, total, disease, diseaseDetail, medicineDetail, doctorId, leaveDay} = item
+                let medicineDetailArray = medicineDetail.split('+')
+                // console.log(medicineDetailArray)
+                medicineDetail = medicineDetailArray.map(items => {
+                  return JSON.parse(items)
+                })
+                // console.log(medicineDetail)
+                this.studentTreat.push({
+                  time,
+                  total,
+                  disease,
+                  diseaseDetail,
+                  medicineDetail,
+                  doctorId,
+                  leaveDay
+                })
+              })
+            }
+          }
+        })
+      }, 400)
+    },
     handleClick (tab, event) {
       console.log(tab)
     },
@@ -206,6 +212,7 @@ export default {
           })
         } else {
           this.isLogin = true
+          this.fetchData()
         }
       } else {
         this.$store.dispatch('openLoginWindow')
@@ -215,6 +222,7 @@ export default {
       if (value && this.userInfo.typ === 'student') {
         if (!this.isLogin) {
           this.isLogin = true
+          this.fetchData()
         }
       } else {
         this.$message.error({
