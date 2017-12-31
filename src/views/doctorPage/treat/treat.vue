@@ -40,6 +40,7 @@
       </el-table>
     </el-dialog>
     <el-form status-icon :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="treatForm">
+      <h3 class="title">就诊页面</h3>
       <el-form-item label="学生学号" prop="studentId">
         <el-col :span="20">
           <el-input v-model="ruleForm.studentId"></el-input>
@@ -277,6 +278,10 @@ export default {
     },
     searchStudentTreat () {
       if (this.studentTreatVisible) {
+        this.studentTreatVisible = false
+        while (this.studentTreat.length > 0) {
+          this.studentTreat.pop()
+        }
         return
       }
       this.$axios.post('http://localhost:3000/searchStudentTreat', {
@@ -288,21 +293,23 @@ export default {
           console.log(serverBackData)
           if (serverBackData.code === 1) {
             this.studentTreatVisible = true
-            let {time, total, disease, diseaseDetail, medicineDetail, doctorId, leaveDay} = serverBackData.data[0]
-            let medicineDetailArray = medicineDetail.split('+')
-            console.log(medicineDetailArray)
-            medicineDetail = medicineDetailArray.map(item => {
-              return JSON.parse(item)
-            })
-            console.log(medicineDetail)
-            this.studentTreat.push({
-              time,
-              total,
-              disease,
-              diseaseDetail,
-              medicineDetail,
-              doctorId,
-              leaveDay
+            serverBackData.data.map(item => {
+              let {time, total, disease, diseaseDetail, medicineDetail, doctorId, leaveDay} = item
+              let medicineDetailArray = medicineDetail.split('+')
+              // console.log(medicineDetailArray)
+              medicineDetail = medicineDetailArray.map(items => {
+                return JSON.parse(items)
+              })
+              // console.log(medicineDetail)
+              this.studentTreat.push({
+                time,
+                total,
+                disease,
+                diseaseDetail,
+                medicineDetail,
+                doctorId,
+                leaveDay
+              })
             })
           } else if (serverBackData.code === -1) {
             this.$message({
@@ -362,7 +369,7 @@ export default {
       } else if (command === '胃痛') {
         this.ruleForm.diseaseDetail = '胃痛，中医病证名。多由外感寒邪、饮食所伤、情志不畅和脾胃素虚等病因而引发。胃是主要病变脏腑，常与肝脾等脏有密切关系。胃气郁滞、失于和降是胃痛的主要病机。治疗以理气和胃为大法，根据不同证候，采取相应治法。'
       } else if (command === '关节扭伤') {
-        this.ruleForm.diseaseDetail = '节扭伤的常见症状有疼痛、肿胀、关节活动不灵等，其中疼痛是每个关节扭伤的病人都会出现的症状，而肿胀、皮肤青紫、关节不能转动则是扭伤的常见表现。'
+        this.ruleForm.diseaseDetail = '关节扭伤的常见症状有疼痛、肿胀、关节活动不灵等，其中疼痛是每个关节扭伤的病人都会出现的症状，而肿胀、皮肤青紫、关节不能转动则是扭伤的常见表现。'
       }
     },
     querySearch (queryString, cb) {
@@ -434,7 +441,7 @@ export default {
         })
         array[index].selectNum = 0
       }
-      if (array[index].selectNum < 0 || array[index].selectNum > array[index].num) {
+      if (parseInt(array[index].selectNum) < 0 || parseInt(array[index].selectNum) > parseInt(array[index].num)) {
         this.$message({
           message: '数量大于或小于库存',
           type: 'warning'
@@ -583,7 +590,7 @@ section {
     width: 20%;
     height: 15%;
     padding: 9% 0;
-    background-color: rgba(35, 181, 171, 1);
+    background-color: rgb(35, 181, 171);
     border-radius: 15px;
     color: #fff;
     font-size: 30px;
@@ -656,6 +663,14 @@ section {
   right: 12px;
   bottom: 45px;
   z-index: 999;
+}
+
+.title {
+  font-size: 24px;
+  color: #24B4AA;
+  margin-bottom: 30px;
+  margin-left: 15px;
+  text-align: left;
 }
 
 .diseaseInfo {

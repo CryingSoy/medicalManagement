@@ -64,6 +64,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{
 }
 
 input[type="number"]{
-        -moz-appearance:textfield;
+  -moz-appearance:textfield;
 }
 </style>
