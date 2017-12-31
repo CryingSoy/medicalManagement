@@ -20,7 +20,7 @@
         <el-form-item>
           <el-button type="primary" @click="submitTreatTime(1)">确定</el-button>
           <el-button type="warning" @click="submitTreatTime(2)">暂停就诊</el-button>
-          <el-button type="success" @click="submitTreatTime(2)">恢复就诊</el-button>
+          <el-button type="success" @click="submitTreatTime(1)">恢复就诊</el-button>
           <el-button type="danger" @click="submitTreatTime(0)">停止就诊</el-button>
           <el-button>重置</el-button>
         </el-form-item>
