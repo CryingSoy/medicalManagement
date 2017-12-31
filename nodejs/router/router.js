@@ -22,7 +22,6 @@ router.post('/register', (req, res) => {
       json.msg = '服务器错误'
       res.json(json)
     }
-    console.log(data)
     let flag = false
     // 用户名正则，4到10位（字母，数字，下划线，减号
     let uPattern = /^[a-zA-Z0-9_-]{4,10}$/
@@ -299,6 +298,17 @@ router.post('/changeDoctorStatus', (req, res) => {
 // 12 坐诊中和休息中
 router.get('/getDoctorStatus', (req, res) => {
   store.getDoctorStatus(req.query.status).then(data => {
+    res.json({
+      code: 1,
+      msg: `一共查询到${data.length}条信息`,
+      data
+    })
+  })
+})
+
+// 参数 要查询的doctor的用户名
+router.get('/getOneDoctorStatus', (req, res) => {
+  store.getOneDoctorStatus(req.query.username).then(data => {
     res.json({
       code: 1,
       msg: `一共查询到${data.length}条信息`,

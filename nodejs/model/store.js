@@ -275,7 +275,19 @@ exports.getDoctorStatus = status => {
       if (error) {
         throw Error
       }
-      console.log(rows)
+      resolve(rows)
+    })
+  })
+}
+
+exports.getOneDoctorStatus = username => {
+  if (!username) return
+  let sqlcommand = `select status from userInfo where username = '${username}'`
+  return new Promise((resolve, reject) => {
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
       resolve(rows)
     })
   })

@@ -63,7 +63,7 @@
         <el-table-column label="请假日期" prop="leaveDay"></el-table-column>
       </el-table>
     </div>
-    <doctor-status></doctor-status>
+    <doctor-status v-if="isLogin"></doctor-status>
   </div>
 </template>
 

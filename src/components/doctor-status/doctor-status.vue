@@ -6,14 +6,15 @@
         <el-button style="float: right" size="mini" type="danger" @click="showCard = !showCard">关闭</el-button>
       </div>
       <div class="text item">
-        <p v-show="treating.length === 0">没校医坐镇中哦~</p>
         <div class="treating">
           <p>校医坐镇中：</p>
-          <p v-for="(t, i) in treating" :key="'t' + i">{{(i + 1) + '：' + t.username}}</p>
+          <p class="empty" v-show="treating.length === 0">没校医坐镇中哦~</p>
+          <p class="items" v-for="(t, i) in treating" :key="'t' + i">{{(i + 1) + '：' + t.username}}</p>
         </div>
         <div class="treating">
           <p>休息中：</p>
-          <p v-for="(r, ind) in resting" :key="'r' + ind">{{(ind = 1) + '：' + r.username}}</p>
+          <p class="empty" v-show="resting.length === 0">没校医休息中哦~</p>
+          <p class="items" v-for="(r, ind) in resting" :key="'r' + ind">{{(ind + 1) + '：' + r.username}}</p>
         </div>
       </div>
     </el-card>
@@ -67,6 +68,12 @@ export default {
   }
   .text {
     color: #999;
+  }
+  .empty {
+    padding: 7px;
+  }
+  .items {
+    padding: 7px;
   }
 }
 </style>
