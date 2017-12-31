@@ -125,7 +125,7 @@ router.post('/treatSave', (req, res) => {
   const form = new formidable.IncomingForm()
   let json = {}
   form.parse(req, (err, data) => {
-    // console.log(data)
+    store.updateDrugsNum(data.medicineDetail)
     store.treatSave(data)
     .then(isSaveSuccess => {
       if (isSaveSuccess) {

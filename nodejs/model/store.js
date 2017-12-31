@@ -143,6 +143,26 @@ exports.treatSave = treatData => {
   })
 }
 
+exports.updateDrugsNum = drugsDetail => {
+  return new Promise((resolve, reject) => {
+    drugsDetail.map(item => {
+      let sqlcommand = `select * from drugs where barCode = '${item.barCode}'`
+      mysql.connection.query(sqlcommand, (error, rows, fields) => {
+        if (error) {
+          throw Error
+        }
+        let num = parseInt(rows[0].num) - parseInt(item.howUsed)
+        let sqlcommand2 = `update drugs set num = '${num}' where barCode = '${item.barCode}'`
+        mysql.connection.query(sqlcommand2, (error2, rows2, fields2) => {
+          if (error2) {
+            throw Error
+          }
+        })
+      })
+    })
+  })
+}
+
 exports.studentSearch = student => {
   return new Promise((resolve, reject) => {
     console.log(student)

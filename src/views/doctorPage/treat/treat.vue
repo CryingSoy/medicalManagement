@@ -369,7 +369,7 @@ export default {
       } else if (command === '胃痛') {
         this.ruleForm.diseaseDetail = '胃痛，中医病证名。多由外感寒邪、饮食所伤、情志不畅和脾胃素虚等病因而引发。胃是主要病变脏腑，常与肝脾等脏有密切关系。胃气郁滞、失于和降是胃痛的主要病机。治疗以理气和胃为大法，根据不同证候，采取相应治法。'
       } else if (command === '关节扭伤') {
-        this.ruleForm.diseaseDetail = '节扭伤的常见症状有疼痛、肿胀、关节活动不灵等，其中疼痛是每个关节扭伤的病人都会出现的症状，而肿胀、皮肤青紫、关节不能转动则是扭伤的常见表现。'
+        this.ruleForm.diseaseDetail = '关节扭伤的常见症状有疼痛、肿胀、关节活动不灵等，其中疼痛是每个关节扭伤的病人都会出现的症状，而肿胀、皮肤青紫、关节不能转动则是扭伤的常见表现。'
       }
     },
     querySearch (queryString, cb) {
