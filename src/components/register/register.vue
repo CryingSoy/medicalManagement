@@ -24,6 +24,18 @@
       <el-form-item label="学号" prop="studentCode" v-show="regData.userType ==='student'">
         <el-input placeholder="请输入学号" v-model="regData.studentCode"></el-input>
       </el-form-item>
+      <el-form-item label="姓名" prop="studentName" v-show="regData.userType ==='student'">
+        <el-input placeholder="请输入姓名" v-model="regData.studentName"></el-input>
+      </el-form-item>
+      <el-form-item label="性别" prop="studentSex" v-show="regData.userType ==='student'">
+        <el-input placeholder="male/female" v-model="regData.studentSex"></el-input>
+      </el-form-item>
+      <el-form-item label="年龄" prop="studentAge" v-show="regData.userType ==='student'">
+        <el-input placeholder="请输入年龄" v-model="regData.studentAge"></el-input>
+      </el-form-item>
+      <el-form-item label="系别" prop="studentDepart" v-show="regData.userType ==='student'">
+        <el-input placeholder="请输入系别" v-model="regData.studentDepart"></el-input>
+      </el-form-item>
     </el-form>
     <el-alert :title="errorText" type="error" v-show="error" @close="closeError"></el-alert>
     <div slot="footer" class="dialog-footer">
@@ -134,6 +146,15 @@ export default {
                 this.errorText = data.msg
                 this.error = true
               } else if (data.code === 1) {
+                this.$axios.post('http://localhost:3000/insertStudentInfo', {
+                  name: this.regData.studentName,
+                  studentCode: this.regData.studentCode,
+                  sex: this.regData.studentSex,
+                  age: this.regData.studentAge,
+                  depart: this.regData.studentDepart
+                }).then(res => {
+                  console.log(res)
+                })
                 this.$message({
                   message: '注册成功',
                   type: 'success'

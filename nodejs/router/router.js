@@ -357,4 +357,21 @@ router.get('/getOneDoctorStatus', (req, res) => {
   })
 })
 
+router.post('/insertStudentInfo', (req, res) => {
+  const form = new formidable.IncomingForm()
+  form.parse(req, (err, data) => {
+    if (err) {
+      console.log(err)
+    }
+    store.insertStudentInfo(data).then(flag => {
+      if (flag) {
+        res.json({
+          code: 1,
+          msg: '添加学生信息成功'
+        })
+      }
+    })
+  })
+})
+
 module.exports = router
