@@ -7,8 +7,7 @@ const formidable = require('formidable')
 const store = require('../model/store')
 // md5加密
 const md5 = require('../model/md5')
-// 访问静态文件
-router.use(express.static(__dirname + '/public/'))
+
 // 坐镇定时器
 let treatTimer = null
 
