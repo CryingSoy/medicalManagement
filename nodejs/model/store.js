@@ -1,7 +1,7 @@
 const mysql = require('../mysql/mysqlConfig')
 const crypto = require('./crypto')
 const serect = require('./serect')
-
+const md5 = require('./md5')
 exports.queryUsername = username => {
   return new Promise((resolve, reject) => {
     let sqlcommand = `select * from userInfo where username = '${username}'`
@@ -44,7 +44,7 @@ exports.queryLogin = data => {
         console.log(error)
         throw Error
       }
-      if (rows.length === 1 && rows[0].password === data.password && rows[0].type === data.userType) {
+      if (rows.length === 1 && data.password && rows[0].password === md5(md5(data.password).substring(0, 10)) && rows[0].type === data.userType) {
         if (!data.hasOwnProperty('token') || '' === rows[0].serect) { //用户在新设备登陆或第一次登陆
           let token = updateToken(data)
           resolve({
