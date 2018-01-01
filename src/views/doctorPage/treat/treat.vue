@@ -250,7 +250,7 @@ export default {
     //   return row.tag === value
     // },
     queryStudentInfo () {
-      this.$axios.post('http://localhost:3000/studentSearch', {
+      this.$axios.post('/studentSearch', {
         studentId: this.ruleForm.studentId
       }).then(res => {
         if (res.status === 200 && res.statusText === 'OK') {
@@ -284,7 +284,7 @@ export default {
         }
         return
       }
-      this.$axios.post('http://localhost:3000/searchStudentTreat', {
+      this.$axios.post('/searchStudentTreat', {
         studentId: this.studentInfo[0].studentId
       }).then(res => {
         if (res.status === 200 && res.statusText === 'OK') {
@@ -331,7 +331,7 @@ export default {
               price: item.money
             }
           })
-          this.$axios.post('http://localhost:3000/treatSave', {
+          this.$axios.post('/treatSave', {
             studentId: this.ruleForm.studentId,
             time: this.ruleForm.treatDate,
             total: this.totalMoney,
@@ -377,7 +377,7 @@ export default {
       }
     },
     querySearch (queryString, cb) {
-      this.$axios.post('http://localhost:3000/drugSearch', {
+      this.$axios.post('/drugSearch', {
         searchItem: this.searchItem
       }).then(res => {
         if (res.status === 200 && res.statusText === 'OK') {

@@ -86,7 +86,7 @@ export default {
     submitTreatTime (status) {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.$axios.post('http://localhost:3000/changeDoctorStatus', {
+          this.$axios.post('/changeDoctorStatus', {
             username: this.userInfo.name,
             status,
             duration: this.treatTime.time

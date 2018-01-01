@@ -120,7 +120,7 @@ export default {
     submitReg () {
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$axios.post('http://localhost:3000/register', {
+          this.$axios.post('/register', {
             userType: this.regData.userType,
             username: this.regData.username,
             password: this.regData.password,

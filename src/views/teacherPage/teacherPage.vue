@@ -91,7 +91,7 @@ export default {
     fetchStudentInfo () {
       this.clearStudentInfo()
       if (this.studentId !== '') {
-        this.$axios.post('http://localhost:3000/studentSearch', {
+        this.$axios.post('/studentSearch', {
           studentId: this.studentId
         }).then(res => {
           if (res.status === 200 && res.statusText === 'OK') {
@@ -108,7 +108,7 @@ export default {
             this.$message.error('网络错误')
           }
         })
-        this.$axios.post('http://localhost:3000/searchStudentTreat', {
+        this.$axios.post('/searchStudentTreat', {
           studentId: this.studentId
         }).then(res => {
           if (res.status === 200 && res.statusText === 'OK') {

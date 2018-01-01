@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     fetchDrugData (drugName = '') {
-      this.$axios.post('http://localhost:3000/drugSearch', {
+      this.$axios.post('/drugSearch', {
         searchItem: drugName
       }).then(res => {
         if (res.status === 200 && res.statusText === 'OK' && res.data.code === 1) {
@@ -120,7 +120,7 @@ export default {
               type: 'error'
             })
           } else {
-            this.$axios.post('http://localhost:3000/changeDrugData', this.changeDrugData).then(res => {
+            this.$axios.post('/changeDrugData', this.changeDrugData).then(res => {
               if (res.status === 200 && res.statusText === 'OK' && res.data.code === 1) {
                 this.$message({
                   message: res.data.msg,
@@ -151,7 +151,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$axios.post('http://localhost:3000/deleteDrug', {
+        this.$axios.post('/deleteDrug', {
           barCode: row.barCode
         }).then(res => {
           if (res.status === 200 && res.statusText === 'OK' && res.data.code === 1) {
