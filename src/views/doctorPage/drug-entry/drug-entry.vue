@@ -30,8 +30,8 @@
         </el-form-item>
         <el-form-item label="存入数量" prop="inNum">
           <el-input-number v-model="drugData.inNum" @change="handleChange" :min="1" :max="999" label="存入数量"></el-input-number>
-          <span class="lastDrugNum-span">剩余数量</span>
-          <el-input placeholder="剩余数量" v-model="lastDrugNum" :disabled="true" class="lastDrugNum"></el-input>
+          <span class="lastDrugNum-span">库存数量</span>
+          <el-input placeholder="库存数量" v-model="lastDrugNum" :disabled="true" class="lastDrugNum"></el-input>
         </el-form-item>
         <el-form-item label="录入时间" prop="storeTime">
           <el-date-picker v-model="drugData.storeTime" type="datetime" placeholder="请输入药品录入时间"></el-date-picker>

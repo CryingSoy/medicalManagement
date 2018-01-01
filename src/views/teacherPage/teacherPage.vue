@@ -5,7 +5,7 @@
       <h3>学生医疗信息查询</h3>
       <el-input class="inline-input" placeholder="请输入学生学号" @keyup.native.enter="fetchStudentInfo" v-model="studentId" clearable></el-input>
       <el-button type="primary" @click="fetchStudentInfo">查询</el-button>
-      <el-button style="margin-left: 0px">重置</el-button>
+      <el-button style="margin-left: 0px" @click="clearStudentInfo();studentId = ''">重置</el-button>
       <table class="content-table" border="1">
         <tr>
           <td>信息</td>
@@ -33,7 +33,7 @@
         </tr>
       </table>
       <h3 style="margin-top: 20px">学生历史就诊信息</h3>
-      <el-table :data="treatHistroy" style="width: 100%; margin-top: 20px">
+      <el-table :data="treatHistroy" style="width: 100%; margin-top: 20px" class="table">
         <el-table-column type="expand">
           <template slot-scope="props">
             <div style="float: left">病因详情：</div>
@@ -89,6 +89,7 @@ export default {
   },
   methods: {
     fetchStudentInfo () {
+      this.clearStudentInfo()
       if (this.studentId !== '') {
         this.$axios.post('http://localhost:3000/studentSearch', {
           studentId: this.studentId
@@ -131,6 +132,10 @@ export default {
       } else {
         this.$message.error('请输入学生学号')
       }
+    },
+    clearStudentInfo () {
+      this.studentData = {}
+      this.treatHistroy = []
     }
   },
   computed: {

@@ -342,9 +342,13 @@ export default {
             leaveDay: this.ruleForm.leave
           }).then(res => {
             if (res.status === 200 && res.statusText === 'OK') {
-              const { data } = res
-              let serverBackData = data
-              console.log(serverBackData)
+              if (res.data.code === 1) {
+                this.$message({
+                  message: '就诊信息录入成功',
+                  type: 'success'
+                })
+                this.resetForm('ruleForm')
+              }
             }
           })
         } else {
