@@ -1,6 +1,6 @@
 <template>
   <div id="treat">
-    <el-dialog title="学生信息" align="center" :visible.sync="dialogTableVisible">
+    <el-dialog title="学生信息" align="center" :visible.sync="dialogTableVisible" :before-close="closeStudentInfo">
       <el-table :data="studentInfo">
         <el-table-column property="name" label="姓名"></el-table-column>
         <el-table-column property="age" label="年龄"></el-table-column>
@@ -397,6 +397,16 @@ export default {
           }, 300 * Math.random())
         }
       })
+    },
+    closeStudentInfo () {
+      while (this.studentInfo.length > 0) {
+        this.studentInfo.pop()
+      }
+      while (this.studentTreat.length > 0) {
+        this.studentTreat.pop()
+      }
+      this.dialogTableVisible = false
+      this.studentTreatVisible = false
     },
     handleSelect (item) {
       if (item.name.indexOf('未搜索') > -1) {
