@@ -250,7 +250,14 @@ export default {
     //   return row.tag === value
     // },
     queryStudentInfo () {
-      this.$axios.post('/studentSearch', {
+      if (this.ruleForm.studentId === '') {
+        this.$message({
+          message: '学生学号不能为空',
+          type: 'error'
+        })
+        return
+      }
+      this.$axios.post('http://localhost:3000/studentSearch', {
         studentId: this.ruleForm.studentId
       }).then(res => {
         if (res.status === 200 && res.statusText === 'OK') {
