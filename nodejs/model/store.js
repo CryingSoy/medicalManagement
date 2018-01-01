@@ -330,6 +330,18 @@ exports.getOneDoctorStatus = username => {
   })
 }
 
+exports.insertStudentInfo = data => {
+  let sqlcommand = `insert into studentInfo(name,studentId,sex,age,depart) value('${data.name}','${data.studentCode}','${data.sex}','${data.age}','${data.depart}')`
+  return new Promise((resolve, reject) => {
+    mysql.connection.query(sqlcommand, (error, rows, fields) => {
+      if (error) {
+        throw Error
+      }
+      resolve(true)
+    })
+  })
+}
+
 function updateToken(data) {
   let now = new Date()
   let issued = (now.getTime()).toString()
