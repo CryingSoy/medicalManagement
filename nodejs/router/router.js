@@ -23,9 +23,7 @@ router.post('/register', (req, res) => {
       res.json(json)
     }
     let flag = false
-    // 用户名正则，4到10位（字母，数字，下划线，减号
-    let uPattern = /^[a-zA-Z0-9_-]{4,10}$/
-    if (!uPattern.test(data.username)) {
+    if (false) {
       json.code = -1
       json.msg = '用户名格式错误'
       res.json(json)
