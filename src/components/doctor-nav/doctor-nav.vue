@@ -4,7 +4,7 @@
       <el-radio-button :label="false">展开</el-radio-button>
       <el-radio-button :label="true">收起</el-radio-button>
     </el-radio-group>
-    <el-menu default-active="treat" class="el-menu-vertical-demo menu" @select="select" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+    <el-menu default-active="doctor-info" class="el-menu-vertical-demo menu" @select="select" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
       <el-menu-item index="treat">
         <i class="el-icon-tickets"></i>
         <span slot="title">就诊页面</span>
@@ -15,10 +15,10 @@
           <span slot="title">药物管理</span>
         </template>
           <el-menu-item index="drug-entry">药品录入</el-menu-item>
-          <el-menu-item index="2-2">药品查询</el-menu-item>
+          <el-menu-item index="drug-search">药品查询</el-menu-item>
           <el-menu-item index="2-3">药品流向</el-menu-item>
       </el-submenu>
-      <el-menu-item index="3">
+      <el-menu-item index="doctor-info">
         <i class="el-icon-menu"></i>
         <span slot="title">个人信息</span>
       </el-menu-item>
@@ -47,6 +47,14 @@ export default {
       } else if (index === 'treat') {
         this.$router.push({
           path: '/doctorPage/treat'
+        })
+      } else if (index === 'drug-search') {
+        this.$router.push({
+          path: '/doctorPage/drugSearch'
+        })
+      } else if (index === 'doctor-info') {
+        this.$router.push({
+          path: '/doctorPage/doctorInfo'
         })
       }
     }

@@ -4,6 +4,8 @@ import teacherPage from '../views/teacherPage/teacherPage.vue'
 import studentPage from '../views/studentPage/studentPage.vue'
 import drugEntry from '../views/doctorPage/drug-entry/drug-entry.vue'
 import treat from '../views/doctorPage/treat/treat.vue'
+import drugSearch from '../views/doctorPage/drug-search/drug-search.vue'
+import doctorInfo from '../views/doctorPage/doctor-info/doctor-info.vue'
 
 export default [
   {
@@ -36,6 +38,16 @@ export default [
         name: 'treat',
         path: '/doctorPage/treat',
         component: treat
+      },
+      {
+        name: 'drugSearch',
+        path: '/doctorPage/drugSearch',
+        component: drugSearch
+      },
+      {
+        name: 'doctorInfo',
+        path: '/doctorPage/doctorInfo',
+        component: doctorInfo
       }
     ]
   }

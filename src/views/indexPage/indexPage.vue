@@ -26,7 +26,7 @@ export default {
   methods: {
     goDoctor () {
       this.$router.push({
-        path: '/doctorPage'
+        path: '/doctorPage/doctorInfo'
       })
     },
     goStudent () {

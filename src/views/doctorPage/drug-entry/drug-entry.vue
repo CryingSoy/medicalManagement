@@ -12,8 +12,7 @@
       </el-autocomplete>
       <el-button type="primary" @click="checkStr">查询</el-button>
       <el-button @click="reset" style="margin-left: 0px">重置</el-button>
-      <el-alert :title="alertInfo" type="success" class="alert-info" v-show="showAlertInfo" @close="closeAlertInfo">
-  </el-alert>
+      <el-alert :title="alertInfo" type="success" class="alert-info" v-show="showAlertInfo" @close="closeAlertInfo"></el-alert>
     </div>
     <div class="drug-form">
       <el-form ref="form" :model="drugData" label-position="right" label-width="80px" :rules="rules">
@@ -31,8 +30,8 @@
         </el-form-item>
         <el-form-item label="存入数量" prop="inNum">
           <el-input-number v-model="drugData.inNum" @change="handleChange" :min="1" :max="999" label="存入数量"></el-input-number>
-          <span class="lastDrugNum-span">剩余数量</span>
-          <el-input placeholder="剩余数量" v-model="lastDrugNum" :disabled="true" class="lastDrugNum"></el-input>
+          <span class="lastDrugNum-span">库存数量</span>
+          <el-input placeholder="库存数量" v-model="lastDrugNum" :disabled="true" class="lastDrugNum"></el-input>
         </el-form-item>
         <el-form-item label="录入时间" prop="storeTime">
           <el-date-picker v-model="drugData.storeTime" type="datetime" placeholder="请输入药品录入时间"></el-date-picker>
@@ -53,6 +52,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'drugEntry',
   data () {
@@ -122,9 +122,10 @@ export default {
     handleChange (value) {
     },
     submitDrugData () {
-      this.drugData.inNum = this.drugData.inNum.toString()
       this.$refs.form.validate(valid => {
         if (valid) {
+          this.drugData.inNum = this.drugData.inNum.toString()
+          this.drugData.inputer = this.userInfo.name
           this.$axios.post('http://localhost:3000/saveDrugData', this.drugData).then(res => {
             if (res.status === 200 && res.statusText === 'OK' && res.data.code === 1) {
               this.$message({
@@ -154,6 +155,11 @@ export default {
   },
   mounted () {
     this.queryDrugData()
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   }
 }
 </script>
