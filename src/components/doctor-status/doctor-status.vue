@@ -32,7 +32,7 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get('http://localhost:3000/getDoctorStatus', {
+    this.$axios.get('/getDoctorStatus', {
       params: {
         status: 12
       }

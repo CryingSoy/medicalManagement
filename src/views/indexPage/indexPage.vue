@@ -90,7 +90,7 @@ export default {
     submitLog () {
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$axios.post('http://localhost:3000/login', {
+          this.$axios.post('/login', {
             userType: this.loginData.userType,
             username: this.loginData.username,
             password: this.loginData.password

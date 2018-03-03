@@ -132,7 +132,7 @@ export default {
     submitReg () {
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$axios.post('http://localhost:3000/register', {
+          this.$axios.post('/register', {
             userType: this.regData.userType,
             username: this.regData.username,
             password: this.regData.password,
@@ -146,7 +146,7 @@ export default {
                 this.errorText = data.msg
                 this.error = true
               } else if (data.code === 1 && this.regData.userType === 'student') {
-                this.$axios.post('http://localhost:3000/insertStudentInfo', {
+                this.$axios.post('/insertStudentInfo', {
                   name: this.regData.studentName,
                   studentCode: this.regData.studentCode,
                   sex: this.regData.studentSex,

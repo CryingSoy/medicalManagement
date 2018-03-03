@@ -127,7 +127,7 @@ export default {
   methods: {
     fetchData () {
       setTimeout(() => {
-        this.$axios.post('http://localhost:3000/studentSearch', {
+        this.$axios.post('/studentSearch', {
           name: this.userInfo.name
         }).then(res => {
           if (res.status === 200 && res.statusText === 'OK') {
@@ -146,7 +146,7 @@ export default {
       }, 300)
 
       setTimeout(() => {
-        this.$axios.post('http://localhost:3000/searchStudentTreat', {
+        this.$axios.post('/searchStudentTreat', {
           studentId: this.studentInfo.studentId
         }).then(res => {
           if (res.status === 200 && res.statusText === 'OK') {
@@ -181,7 +181,7 @@ export default {
       console.log(tab)
     },
     submitEdit () {
-      this.$axios.post('http://localhost:3000/updateStudentInfo', {
+      this.$axios.post('/updateStudentInfo', {
         name: this.studentInfo.name,
         sex: this.studentInfo.sex,
         age: this.studentInfo.age,

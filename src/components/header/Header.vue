@@ -47,7 +47,7 @@ export default {
   },
   beforeMount () {
     if (localStorage.siseToken && localStorage.siseToken !== '') {
-      this.$axios.post('http://localhost:3000/login', {
+      this.$axios.post('/login', {
         token: localStorage.siseToken
       }).then(res => {
         if (res.status === 200 && res.statusText === 'OK') {
