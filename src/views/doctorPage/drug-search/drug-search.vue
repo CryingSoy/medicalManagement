@@ -2,7 +2,7 @@
   <div class="container">
     <h3 class="title">药物查询</h3>
     <el-input class="inline-input" placeholder="请扫药品条形码或输入药物名称" v-model="drug" clearable @keyup.native="changeDrugTable"></el-input>
-    <el-button type="primary">查询</el-button>
+    <el-button type="primary" @click="searchDurg">查询</el-button>
     <el-button style="margin-left: 0px">重置</el-button>
     <el-table :data="drugData" style="width: 100%; margin-top: 20px">
       <el-table-column prop="name" label="药物名称" min-width="180px"></el-table-column>
@@ -87,7 +87,10 @@ export default {
     }
   },
   methods: {
-    fetchDrugData (drugName = '') {
+    searchDurg () {
+      this.fetchDrugData(this.drug)
+    },
+    fetchDrugData (drugName) {
       this.$axios.post('http://localhost:3000/drugSearch', {
         searchItem: drugName
       }).then(res => {

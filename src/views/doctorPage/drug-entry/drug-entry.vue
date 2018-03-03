@@ -110,12 +110,17 @@ export default {
       this.showAlertInfo = true
       this.alertInfo = `药品${item.name}[${item.barCode}]信息已存在数据库，更改以下某一条信息，都会影响到数据库。如只需添加库存，建议只更改存入数量。`
     },
-    queryDrugData () {
-      this.$axios.post('http://localhost:3000/drugSearch').then(res => {
+    queryDrugData (durgname) {
+      this.$axios.post('http://localhost:3000/drugSearch', {
+        searchItem: durgname
+      }).then(res => {
         if (res.status === 200 && res.statusText === 'OK' && res.data.code === 1) {
           this.drugs = res.data.data
         } else {
-          console.log(res.data.msg)
+          this.$message({
+            message: res.data.msg,
+            type: 'error'
+          })
         }
       })
     },
@@ -151,7 +156,9 @@ export default {
     closeAlertInfo () {
       this.showAlertInfo = false
     },
-    checkStr () {}
+    checkStr () {
+      this.queryDrugData(this.drug)
+    }
   },
   mounted () {
     this.queryDrugData()
