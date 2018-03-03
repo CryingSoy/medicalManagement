@@ -3,8 +3,8 @@
     <h1 @click="goIndex">华软医疗管理系统</h1>
     <ul>
       <div v-if="!isShowUserInfo">
-        <li class="click" @click="login">登录</li>
-      <li class="click" @click="register">注册</li>
+        <li class="click" @click="login" v-show="$route.path !== '/'">登录</li>
+      <li class="click" v-show="$route.path !== '/'" @click="register">注册</li>
       </div>
       <div v-else>
         <li>{{ userInfo.typCN }}</li>

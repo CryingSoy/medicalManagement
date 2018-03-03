@@ -16,7 +16,7 @@
     <el-alert :title="errorText" type="error" v-show="error" @close="closeError"></el-alert>
     <div slot="footer" class="dialog-footer">
       <el-button class="default-btn"  @click="closeLogin">取 消</el-button>
-      <el-button class="success-btn" type="primary" @click="submitReg">确 定</el-button>
+      <el-button class="success-btn" type="primary" @click="submitLog">确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -71,7 +71,7 @@ export default {
       this.$refs.form.resetFields()
       this.$store.dispatch('closeLoginWindow')
     },
-    submitReg () {
+    submitLog () {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.$axios.post('http://localhost:3000/login', {
