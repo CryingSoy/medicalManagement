@@ -93,9 +93,13 @@ export default {
           message: '请输入密码',
           trigger: 'blur'
         }, {
-          min: 4,
+          min: 3,
           max: 12,
+<<<<<<< HEAD
+          message: '长度在 3 到 12 个字符',
+=======
           message: '长度在 4 到 16 个字符',
+>>>>>>> dc5c8dd21c3d7c88c72af202aabcd84d567e9252
           trigger: 'blur'
         }],
         birth: [{
