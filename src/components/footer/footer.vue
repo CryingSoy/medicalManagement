@@ -1,6 +1,6 @@
 <template>
   <div id="footer">
-    <p></p>
+    <p>Copyright © 2017 - 2018 r516</p>
   </div>
 </template>
 

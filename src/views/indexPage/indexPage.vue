@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-
+    <my-header></my-header>
+    <my-footer></my-footer>
   </div>
 </template>
 
