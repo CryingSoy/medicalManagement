@@ -118,6 +118,9 @@ export default {
                 type: 'success'
               })
               this.treatHistroy = res.data.data
+              this.treatHistroy.forEach(e => {
+                if (e.leaveDay === '0') e.leaveDay = '未请假'
+              })
               this.treatHistroy = this.treatHistroy.reverse()
               this.treatHistroy.forEach(element => {
                 element.medicineDetail = element.medicineDetail.split('+')

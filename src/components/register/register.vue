@@ -95,11 +95,7 @@ export default {
         }, {
           min: 3,
           max: 12,
-<<<<<<< HEAD
           message: '长度在 3 到 12 个字符',
-=======
-          message: '长度在 4 到 16 个字符',
->>>>>>> dc5c8dd21c3d7c88c72af202aabcd84d567e9252
           trigger: 'blur'
         }],
         birth: [{
@@ -149,26 +145,27 @@ export default {
               if (data.code === -1) {
                 this.errorText = data.msg
                 this.error = true
-              } else if (data.code === 1) {
+              } else if (data.code === 1 && this.regData.userType === 'student') {
                 this.$axios.post('http://localhost:3000/insertStudentInfo', {
                   name: this.regData.studentName,
                   studentCode: this.regData.studentCode,
                   sex: this.regData.studentSex,
                   age: this.regData.studentAge,
-                  depart: this.regData.studentDepart
+                  depart: this.regData.studentDepart,
+                  username: this.regData.username
                 }).then(res => {
                   console.log(res)
                 })
-                this.$message({
-                  message: '注册成功',
-                  type: 'success'
-                })
-                this.$refs.form.resetFields()
-                setTimeout(() => {
-                  this.$store.dispatch('closeRegWindow')
-                  this.$store.dispatch('openLoginWindow')
-                }, 1000)
               }
+              this.$message({
+                message: '注册成功',
+                type: 'success'
+              })
+              this.$refs.form.resetFields()
+              setTimeout(() => {
+                this.$store.dispatch('closeRegWindow')
+                this.$store.dispatch('openLoginWindow')
+              }, 1000)
             }
           })
         } else {

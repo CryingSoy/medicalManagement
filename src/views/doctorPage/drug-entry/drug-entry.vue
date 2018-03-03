@@ -63,7 +63,8 @@ export default {
         factory: '',
         introduce: '',
         useDetail: '',
-        storeTime: new Date()
+        storeTime: new Date(),
+        inNum: 1
       },
       lastDrugNum: 0,
       rules: {

@@ -346,7 +346,7 @@ export default {
             diseaseDetail: this.ruleForm.diseaseDetail,
             doctorId: this.ruleForm.doctorName,
             medicineDetail: medicine,
-            leaveDay: this.ruleForm.leave
+            leaveDay: this.ruleForm.leave || 0
           }).then(res => {
             if (res.status === 200 && res.statusText === 'OK') {
               if (res.data.code === 1) {

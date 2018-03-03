@@ -167,7 +167,7 @@ exports.studentSearch = student => {
   return new Promise((resolve, reject) => {
     // console.log(student)
     if (student.hasOwnProperty('name')) {
-      var sqlcommand = `select * from studentInfo where name = '${student.name}'`
+      var sqlcommand = `select * from studentInfo where username = '${student.name}'`
     } else {
       var sqlcommand = `select * from studentInfo where studentId = '${student.studentId}'`
     }
@@ -331,7 +331,7 @@ exports.getOneDoctorStatus = username => {
 }
 
 exports.insertStudentInfo = data => {
-  let sqlcommand = `insert into studentInfo(name,studentId,sex,age,depart) value('${data.name}','${data.studentCode}','${data.sex}','${data.age}','${data.depart}')`
+  let sqlcommand = `insert into studentInfo(name,studentId,sex,age,depart,username) value('${data.name}','${data.studentCode}','${data.sex}','${data.age}','${data.depart}','${data.username}')`
   return new Promise((resolve, reject) => {
     mysql.connection.query(sqlcommand, (error, rows, fields) => {
       if (error) {
