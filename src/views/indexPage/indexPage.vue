@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <my-header></my-header>
+    <register></register>
+    <h1 class="title">华软医疗管理系统</h1>
     <main>
       <div class="login-wrapper" v-if="!isShowUserInfo">
         <h1>登陆窗口</h1>
@@ -30,12 +31,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import myHeader from '../../components/header/Header.vue'
 import myFooter from '../../components/footer/footer.vue'
+import register from '../../components/register/register.vue'
 export default {
   components: {
-    myHeader,
-    myFooter
+    myFooter,
+    register
   },
   data () {
     return {
@@ -156,12 +157,24 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.container {
+  background: url('./timg.jpg') no-repeat;
+  height: 100%;
+  background-size: 100% 100%;
+  .title {
+    font-family: 'KaiTi';
+    font-size: 70px;
+    position: absolute;
+    left: 8%;
+    top: 8%;
+  }
+}
 main {
   background-color: rgba(0, 0, 0, .2);
   .login-wrapper {
     box-sizing: border-box;
     float: right;
-    margin: 130px 100px 0 0;
+    margin: 12% 10% 0 0;
     width: 400px;
     height: 400px;
     padding: 15px 40px 0;
