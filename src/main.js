@@ -9,6 +9,15 @@ import store from './store/'
 
 Vue.use(ElementUI)
 
+axios.interceptors.request.use(
+  config => {
+    if (localStorage.getItem('siseToken')) {
+      config.headers.Authorization = localStorage.getItem('siseToken')
+    }
+    return config
+  }
+)
+
 Vue.prototype.$axios = axios
 
 Vue.use(VueRouter)

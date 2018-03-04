@@ -7,8 +7,6 @@ const formidable = require('formidable')
 const store = require('../model/store')
 // md5加密
 const md5 = require('../model/md5')
-// 访问静态文件
-router.use(express.static(__dirname + '/public/'))
 // 坐镇定时器
 let treatTimer = null
 
@@ -73,11 +71,11 @@ router.post('/login', (req, res) => {
     }
     store.queryLogin(data)
     .then(isCorrent => {
-      if (isCorrent === false) {
+      if (!isCorrent) {
         json.code = -1
         json.msg = '用户名不存在或密码错误'
         res.json(json)
-      } else if (isCorrent.true === true) {
+      } else if (isCorrent.true) {
         json.code = 1
         json.msg = 'Token验证正确，登陆成功'
         json.data = isCorrent
