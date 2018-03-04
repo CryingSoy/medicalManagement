@@ -217,7 +217,7 @@ exports.insertDrugData = drugData => {
     let drugDataPinYin = py(`${drugData.name}`, {
       style: py.STYLE_FIRST_LETTER
     }).join('')
-    let sqlcommand = `insert into drugs(barCode,name,money,useDetail,factory,num,lastStorageTime,introduce,pinyin) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${drugData.useDetail}','${drugData.factory}','${drugData.inNum}','${drugData.storeTime}','${drugData.introduce}','${drugDataPinYin}')`
+    let sqlcommand = `insert into drugs(barCode,name,money,useDetail,factory,num,lastStorageTime,introduce,pihao,pinyin) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${drugData.useDetail}','${drugData.factory}','${drugData.inNum}','${drugData.storeTime}','${drugData.introduce}','${drugData.pihao}','${drugDataPinYin}')`
     mysql.connection.query(sqlcommand, (error, rows, fields) => {
       if (error) {
         throw Error
