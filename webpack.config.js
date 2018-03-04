@@ -37,7 +37,7 @@ module.exports = {
       loader: 'less'
     },
     {
-      test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+      test: /\.(eot|svg|otf|ttf|woff|woff2)(\?\S*)?$/,
       loader: 'file-loader'
     },
 

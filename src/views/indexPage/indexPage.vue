@@ -157,16 +157,21 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@font-face {
+font-family: fontface;
+src: url('kt.ttf');
+}
 .container {
   background: url('./timg.jpg') no-repeat;
   height: 100%;
   background-size: 100% 100%;
   .title {
-    font-family: 'KaiTi';
+    font-family: fontface;
     font-size: 70px;
     position: absolute;
     left: 8%;
     top: 8%;
+    user-select: none;
   }
 }
 main {
