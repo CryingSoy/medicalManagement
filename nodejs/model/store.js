@@ -345,7 +345,7 @@ exports.insertStudentInfo = data => {
 function updateToken(data) {
   let now = new Date()
   let issued = (now.getTime()).toString()
-  let expire = (now.getTime() + 10800000).toString() //3小时
+  let expire = (now.getTime() + 86400000).toString() //3小时
   let userserect = serect() //用户私有id
   let signature = ''
   let header = {
