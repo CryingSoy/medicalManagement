@@ -16,11 +16,14 @@
     </div>
     <div class="drug-form">
       <el-form ref="form" :model="drugData" label-position="right" label-width="80px" :rules="rules">
+        <el-form-item label="条形码" prop="barCode">
+          <el-input v-model="drugData.barCode" @keyup.native="searchBarCode" class="el-input" clearable placeholder="请输入药物条形码"></el-input>
+        </el-form-item>
         <el-form-item label="药物名称" prop="name">
           <el-input v-model="drugData.name" class="el-input" clearable placeholder="请输入药物名称"></el-input>
         </el-form-item>
-        <el-form-item label="条形码" prop="barCode">
-          <el-input v-model="drugData.barCode" class="el-input" clearable placeholder="请输入药物条形码"></el-input>
+        <el-form-item label="生产批号" prop="pihao">
+          <el-input type="number" v-model="drugData.pihao" class="el-input" clearable placeholder="请输入生产批号"></el-input>
         </el-form-item>
         <el-form-item label="单价" prop="money">
           <el-input type="number" v-model="drugData.money" class="el-input" clearable placeholder="请输入药物单价"></el-input>
@@ -60,12 +63,14 @@ export default {
       drug: '',
       drugs: [],
       drugData: {
+        name: '',
         factory: '',
         introduce: '',
         useDetail: '',
         storeTime: new Date(),
         inNum: 1
       },
+      sending: false,
       lastDrugNum: 0,
       rules: {
         name: [
@@ -76,6 +81,9 @@ export default {
         ],
         money: [
           { required: true, message: '请输入药品单价', trigger: 'blur' }
+        ],
+        pihao: [
+          { required: true, message: '请输入生产批号', trigger: 'blur' }
         ],
         storeTime: [
           { required: true, message: '请选择时间', trigger: 'change' }
@@ -89,6 +97,32 @@ export default {
     }
   },
   methods: {
+    searchBarCode () {
+      if (this.sending) return
+      if (this.drugData.barCode.length !== 13) return
+      this.sending = true
+      this.$axios.get('http://api.jisuapi.com/barcode2/query?appkey=2d6897693df6271d&barcode=' + this.drugData.barCode)
+        .then(res => {
+          if (res.status === 200) {
+            this.sending = false
+            if (res.data.msg === 'ok') {
+              const { result } = res.data
+              this.drugData.name = result.name
+              this.drugData.factory = result.company
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: 'error'
+              })
+            }
+          } else {
+            this.$message({
+              message: res.statusText,
+              type: 'error'
+            })
+          }
+        })
+    },
     queryDrug (str, callback) {
       let drugList = this.drugs
       let result = str ? drugList.filter(this.createFilter(str)) : drugList

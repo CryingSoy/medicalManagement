@@ -208,7 +208,7 @@ exports.searchStudentTreat = studentId => {
 
 exports.insertDrugData = drugData => {
   return new Promise((resolve, reject) => {
-    let sqlcommand = `insert into drugs(barCode,name,money,useDetail,factory,num,lastStorageTime,introduce) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${drugData.useDetail}','${drugData.factory}','${drugData.inNum}','${drugData.storeTime}','${drugData.introduce}')`
+    let sqlcommand = `insert into drugs(barCode,name,money,useDetail,factory,num,lastStorageTime,introduce,pihao) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${drugData.useDetail}','${drugData.factory}','${drugData.inNum}','${drugData.storeTime}','${drugData.introduce}','${drugData.pihao}')`
     mysql.connection.query(sqlcommand, (error, rows, fields) => {
       if (error) {
         throw Error
