@@ -2,6 +2,8 @@ const mysql = require('../mysql/mysqlConfig')
 const crypto = require('./crypto')
 const serect = require('./serect')
 const md5 = require('./md5')
+const py = require('pinyin')
+
 exports.queryUsername = username => {
   return new Promise((resolve, reject) => {
     let sqlcommand = `select * from userInfo where username = '${username}'`
@@ -99,7 +101,10 @@ exports.drugSearch = searchItem => {
     if (searchItem === undefined) {
       searchItem = ''
     }
-    let sqlcommand = `select * from drugs where name like '%${searchItem}%' or barCode like '%${searchItem}%'`
+    let searchItemPinYin = py(`%${searchItem}%`, {
+      style: py.STYLE_FIRST_LETTER
+    }).join('')
+    let sqlcommand = `select * from drugs where name like '%${searchItem}%' or barCode like '%${searchItem}%' or pinyin like '%${searchItemPinYin}%'`
     mysql.connection.query(sqlcommand, (error, rows, fields) => {
       if (error) {
         throw Error
@@ -115,7 +120,8 @@ exports.drugSearch = searchItem => {
             useDetail: item.useDetail,
             factory: item.factory,
             num: item.num.toString(),
-            introduce: item.introduce
+            introduce: item.introduce,
+            pinyin: item.pinyin
           }
         })
         resolve(array)
@@ -208,7 +214,10 @@ exports.searchStudentTreat = studentId => {
 
 exports.insertDrugData = drugData => {
   return new Promise((resolve, reject) => {
-    let sqlcommand = `insert into drugs(barCode,name,money,useDetail,factory,num,lastStorageTime,introduce) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${drugData.useDetail}','${drugData.factory}','${drugData.inNum}','${drugData.storeTime}','${drugData.introduce}')`
+    let drugDataPinYin = py(`${drugData.name}`, {
+      style: py.STYLE_FIRST_LETTER
+    }).join('')
+    let sqlcommand = `insert into drugs(barCode,name,money,useDetail,factory,num,lastStorageTime,introduce,pinyin) value('${drugData.barCode}','${drugData.name}','${drugData.money}','${drugData.useDetail}','${drugData.factory}','${drugData.inNum}','${drugData.storeTime}','${drugData.introduce}','${drugDataPinYin}')`
     mysql.connection.query(sqlcommand, (error, rows, fields) => {
       if (error) {
         throw Error

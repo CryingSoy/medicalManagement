@@ -96,7 +96,7 @@ export default {
     },
     createFilter (str) {
       return element => {
-        return element.barCode.indexOf(str) !== -1 || element.name.indexOf(str) !== -1
+        return element.barCode.indexOf(str) !== -1 || element.name.indexOf(str) !== -1 || element.pinyin.indexOf(str) !== -1
       }
     },
     handleSelect (item) {
