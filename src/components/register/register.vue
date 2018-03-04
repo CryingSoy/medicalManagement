@@ -28,7 +28,7 @@
         <el-input placeholder="请输入姓名" v-model="regData.studentName"></el-input>
       </el-form-item>
       <el-form-item label="性别" prop="studentSex" v-show="regData.userType ==='student'">
-        <el-input placeholder="male/female" v-model="regData.studentSex"></el-input>
+        <el-input placeholder="男/女" v-model="regData.studentSex"></el-input>
       </el-form-item>
       <el-form-item label="年龄" prop="studentAge" v-show="regData.userType ==='student'">
         <el-input placeholder="请输入年龄" v-model="regData.studentAge"></el-input>
